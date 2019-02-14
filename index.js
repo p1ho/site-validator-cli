@@ -81,7 +81,7 @@ Main Process
         });
 
         const get_urls = (json) => {
-          if (json.urlset.url.length === 1) {
+          if (json.urlset.url.length === 1 || json.urlset.url.length === undefined) {
             var urls = [json.urlset.url.loc];
           } else {
             var urls = json.urlset.url.map( o => {return o.loc} );
