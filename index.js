@@ -159,7 +159,7 @@ Main Process
         if (isValidHtml(json, options.quiet)) {
           console.log(green_on_black('Validated') + `: ${page_url}`);
         } else {
-          console.error(red_on_black('Failed') + `: ${page_url}`);
+          console.log(red_on_black('Failed') + `: ${page_url}`);
 
           const printError = (msg) => {
 
@@ -168,13 +168,16 @@ Main Process
             var firstCol  = msg.firstColumn || msg.lastColumn;
             var lastCol   = msg.lastColumn  || msg.firstColumn;
 
-            console.log(`\nFrom line ${firstLine}, column ${firstCol}; ` +
-                        `to line ${lastLine}, column ${lastCol}`);
-
             if (msg.type === "error") {
+              console.log(`\nFrom line ${firstLine}, column ${firstCol}; ` +
+                          `to line ${lastLine}, column ${lastCol}`);
               console.log(black_on_red(msg.message) + '\n');
             } else {
-              console.log(black_on_yellow(msg.message) + '\n');
+              if (!options.quiet) {
+                console.log(`\nFrom line ${firstLine}, column ${firstCol}; ` +
+                            `to line ${lastLine}, column ${lastCol}`);
+                console.log(black_on_yellow(msg.message) + '\n');
+              }
             }
           }
 
