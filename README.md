@@ -1,4 +1,5 @@
 # site-validator-cli
+
 A CLI that takes a URL and retrieves its sitemap, then uses **[html-validator](https://www.npmjs.com/package/html-validator)** (a wrapper for https://validator.w3.org/nu/) to validate each page.
 ## Installation
 This is not published on [npm](https://www.npmjs.com/) yet, so the following is how you could install the developer version.
@@ -32,5 +33,10 @@ $node index.js <url> --cacheTime <minutes>
 ```
 Because sitemap generation, as well as getting their validation information can be costly, a caching mechanism is in place. Simply put in this flag and specify the number of minutes you'd like this cache to live.
 The caches will be stored in the cache folder.
+## Acknowledgement
+* I have gotten a lot of help from [zrrrzzt](https://github.com/zrrrzzt) who actually gave me a [working starter code](https://gist.github.com/zrrrzzt/f0f2e5d64f2b69b330f377423717d7a7).
+
+* This module was inspired by **[w3c-vadlidator-cli](https://www.npmjs.com/package/w3c-validator-cli)**, unfortunately, it has not been updated for a while, which prompted me to make this one. This module is essentially what that one would be had it been supported till today.
+
 ## Contact
 I can be contacted at hopokuan@umich.edu
