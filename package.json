@@ -1,0 +1,64 @@
+{
+  "name": "site-validator-cli",
+  "version": "1.0.0",
+  "description": "Takes a URL and retrieves its sitemap, then uses html-validator (a wrapper for https://validator.w3.org/nu/) to validate each page.",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "engines": {
+    "node": ">=6.14.4"
+  },
+  "dependencies": {
+    "cache": "^2.1.0",
+    "cli-color": "^1.4.0",
+    "fast-xml-parser": "^3.12.13",
+    "flat-cache": "^2.0.1",
+    "html-validator": "^3.1.3",
+    "minimist": "^1.2.0",
+    "normalize-url": "^4.1.0",
+    "sitemap-generator": "^8.3.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "html-validator",
+    "validation",
+    "cli"
+  ],
+  "author": {
+    "name": "Pokuan Ho",
+    "email": "hopokuan@umich.edu",
+    "url": "https://github.com/p1ho"
+  },
+  "contributors": [
+    {
+      "name": "Geir Gåsodden",
+      "email": "geir.gasodden@pythonia.no",
+      "url": "https://github.com/zrrrzzt"
+    }
+  ],
+  "license": {
+    "type": "MIT",
+    "url": "https://www.opensource.org/licenses/mit-license.php"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/p1ho/site-validator-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/p1ho/site-validator-cli/issues"
+  },
+  "homepage": "https://github.com/p1ho/site-validator-cli#readme",
+  "dependencies": {
+    "normalize-url": "4.1.0",
+    "sitemap-generator": "8.3.2",
+    "html-validator": "3.1.3",
+    "fast-xml-parser": "3.12.13",
+    "minimist": "1.2.0",
+    "cli-color": "1.4.0",
+    "flat-cache": "2.0.1"
+  }
+}
