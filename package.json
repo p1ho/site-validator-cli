@@ -6,24 +6,27 @@
   "directories": {
     "lib": "lib"
   },
+  "bin": {
+    "site-validator": "index.js"
+  },
   "engines": {
     "node": ">=6.14.4"
   },
   "dependencies": {
-    "cache": "^2.1.0",
-    "cli-color": "^1.4.0",
-    "fast-xml-parser": "^3.12.13",
-    "flat-cache": "^2.0.1",
-    "html-validator": "^3.1.3",
-    "minimist": "^1.2.0",
-    "normalize-url": "^4.1.0",
-    "sitemap-generator": "^8.3.2"
+    "normalize-url": "4.1.0",
+    "sitemap-generator": "8.3.2",
+    "html-validator": "3.1.3",
+    "fast-xml-parser": "3.12.13",
+    "minimist": "1.2.0",
+    "cli-color": "1.4.0",
+    "flat-cache": "2.0.1"
   },
   "devDependencies": {},
   "scripts": {
     "test": "mocha"
   },
   "keywords": [
+    "site-validator",
     "html-validator",
     "validation",
     "cli"
@@ -52,13 +55,8 @@
     "url": "https://github.com/p1ho/site-validator-cli/issues"
   },
   "homepage": "https://github.com/p1ho/site-validator-cli#readme",
-  "dependencies": {
-    "normalize-url": "4.1.0",
-    "sitemap-generator": "8.3.2",
-    "html-validator": "3.1.3",
-    "fast-xml-parser": "3.12.13",
-    "minimist": "1.2.0",
-    "cli-color": "1.4.0",
-    "flat-cache": "2.0.1"
-  }
+  "files": [
+    "lib/*.{js,json}",
+    "index.js"
+  ]
 }
