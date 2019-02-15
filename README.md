@@ -7,35 +7,39 @@ Navigate inside to where you cloned the repo and type
 ```
 $ npm install
 ```
-This installs all the dependencies. If this throws no error, the script should be usable.
+This installs all the dependencies. If this throws no error, type
+```
+$ npm link
+```
+This makes it so ```$ site-validator``` can be used as the keyword instead of ```$ node index.js```
 
 ## Usage
 ```
-$ node index.js <url>
+$ site-validator <url>
 ```
 This takes in the url you specify, generate the entire sitemap for that domain, and tries to validate each page found in the sitemap
 
 ## Options
 ### Verbose Mode
 ```
-$ node index.js <url> --verbose
+$ site-validator <url> --verbose
 ```
 This flag will pretty-print out the errors/warnings. Without it, it'll only tell you whether the page validated without outputting the actual errors.
 ### Quiet Mode
 ```
-$ node index.js <url> --quiet
+$ site-validator <url> --quiet
 ```
 This flag will ignore warnings or informational messages.
 ### Caching
 ```
-$ node index.js <url> --cacheTime <minutes>
+$ site-validator <url> --cacheTime <minutes>
 ```
 Because sitemap generation, as well as getting their validation information can be costly, a caching mechanism is in place. Simply put in this flag and specify the number of minutes you'd like this cache to live.
 The caches will be stored in the cache folder.
 
 ### Chaining Options
 ```
-$ node index.js <url> --verbose --quiet --cacheTime <minutes>
+$ site-validator <url> --verbose --quiet --cacheTime <minutes>
 ```
 The optional parameters can be chained in any order, as long as they are behind the URL that is being evaluated.
 ## Acknowledgement
