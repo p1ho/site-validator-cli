@@ -10,7 +10,7 @@
     "site-validator": "index.js"
   },
   "engines": {
-    "node": ">=6.14.4"
+    "node": ">=8.15.0"
   },
   "dependencies": {
     "normalize-url": "4.1.0",
