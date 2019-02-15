@@ -24,6 +24,7 @@ var green_on_black  = clc.xterm(47).bgXterm(0);
 var red_on_black    = clc.xterm(196).bgXterm(0);
 var black_on_red    = clc.xterm(15).bgXterm(124);
 var black_on_yellow = clc.xterm(0).bgXterm(11);
+var cyan_on_black = clc.xterm(14).bgXterm(0);
 
 /*
 Parsing query parameters
@@ -37,13 +38,14 @@ let options = {
   quiet: argv.quiet !== undefined,
 };
 
+var now = new Date().getTime();
+
 /*
 Init Cache
  */
 if (options.cacheTime !== 0) {
   var xml_cache = flat_cache.load('xml_cache', path.resolve('./cache'));
   var w3c_cache = flat_cache.load('w3c_cache', path.resolve('./cache'));
-  var now = new Date().getTime();
   var expire = now + options.cacheTime;
 }
 
@@ -92,7 +94,7 @@ Main Process
 
         const get_sitemap = (url) => {
           generator.on('done', async () => {
-            console.log(`\nSitemap generated for ${url}`);
+            console.log("\n" + green_on_black("Success") + ` Sitemap generated for ${url}`);
             var data = fs.readFileSync(filepath, 'utf8');
             if (options.cacheTime !== 0) {
               var cache_new = {
@@ -111,15 +113,15 @@ Main Process
         if (options.cacheTime !== 0 && xml_cache !== undefined) {
           let cache_old = xml_cache.getKey(options.url);
           if (cache_old !== undefined && cache_old.expire >= now) {
-            console.log('\nSitemap cache found!');
+            console.log("\n" + green_on_black("Success") + ` Sitemap cache found for ${url}`);
             let data_json = xml_parser.parse(cache_old.data);
             return resolve(get_urls(data_json));
           } else {
-            console.log('\nSitemap cache not available, refetching Sitemap...');
+            console.log(`\nSitemap cache not available, refetching Sitemap for ${url} ...`);
             get_sitemap(options.url);
           }
         } else {
-          console.log('\nFetching Sitemap...');
+          console.log(`\nFetching Sitemap for ${url} ...`);
           get_sitemap(options.url);
         }
 
@@ -136,6 +138,10 @@ Main Process
 
   let pagesToValidate = await generateSitemap(options.url);
   let pagesTotal = pagesToValidate.length;
+  console.log(`\nEvaluating a total of ${pagesTotal} pages`);
+
+  let pagesFail = [];
+
   console.log('__________________________________');
 
   const validateNextPage = async () => {
@@ -157,9 +163,10 @@ Main Process
 
       const printResult = (json) => {
         if (isValidHtml(json, options.quiet)) {
-          console.log(green_on_black('Validated') + `: ${page_url}`);
+          console.log(green_on_black('Validated') + ` ${page_url}`);
         } else {
-          console.log(red_on_black('Failed') + `: ${page_url}`);
+          console.log(red_on_black('Failed') + ` ${page_url}`);
+          pagesFail.push(page_url);
 
           const printError = (msg) => {
 
@@ -168,15 +175,17 @@ Main Process
             var firstCol  = msg.firstColumn || msg.lastColumn;
             var lastCol   = msg.lastColumn  || msg.firstColumn;
 
+            var error_type = (msg.subType || msg.type).toUpperCase();
+
             if (msg.type === "error") {
-              console.log(`\nFrom line ${firstLine}, column ${firstCol}; ` +
+              console.log(`\n[${error_type}] From line ${firstLine}, column ${firstCol}; ` +
                           `to line ${lastLine}, column ${lastCol}`);
-              console.log(black_on_red(msg.message) + '\n');
+              console.log(black_on_red(msg.message) + ' \n');
             } else {
               if (!options.quiet) {
-                console.log(`\nFrom line ${firstLine}, column ${firstCol}; ` +
+                console.log(`\n[${error_type}] From line ${firstLine}, column ${firstCol}; ` +
                             `to line ${lastLine}, column ${lastCol}`);
-                console.log(black_on_yellow(msg.message) + '\n');
+                console.log(black_on_yellow(msg.message) + ' \n');
               }
             }
           }
@@ -211,7 +220,14 @@ Main Process
       console.log('__________________________________');
       await validateNextPage();
     } else {
-      console.log('\nFinished Checking, have an A-1 Day!\n');
+      if (pagesFail.length === 0) {
+        console.log("\n" + green_on_black("Site Validated") + ` No problems were found for ${options.url}`);
+      } else {
+        console.log("\n" + red_on_black("Site Failed Validation") +
+        ` ${pagesFail.length} out of ${pagesTotal} pages failed validation for ${options.url}:\n`);
+        pagesFail.forEach( (e) => { console.log(e) } );
+      }
+      console.log(cyan_on_black('\nFinished Checking, have an A-1 Day!') + ' \n');
     }
   }
 
