@@ -43,10 +43,7 @@
       "url": "https://github.com/zrrrzzt"
     }
   ],
-  "license": {
-    "type": "MIT",
-    "url": "https://www.opensource.org/licenses/mit-license.php"
-  },
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/p1ho/site-validator-cli.git"
