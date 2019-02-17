@@ -34,6 +34,7 @@ const argv = minimist(process.argv.slice(2));
 
 let options = {
   cacheTime: argv.cacheTime !== undefined ? argv.cacheTime * 1000 * 60 : 0,
+  failfast: argv.ff !== undefined,
   verbose: argv.verbose !== undefined,
   quiet: argv.quiet !== undefined,
 };
@@ -218,7 +219,12 @@ Main Process
         printResult(JSON.parse(result));
       }
       console.log('__________________________________');
-      await validateNextPage();
+      if (options.failfast && pagesFail.length > 0) {
+        console.log("\n" + red_on_black("Mode Fail Fast. Site Failed Validation. Exit"));
+        process.exit(1);
+      } else {
+        await validateNextPage();
+      }
     } else {
       if (pagesFail.length === 0) {
         console.log("\n" + green_on_black("Site Validated") + ` No problems were found for ${options.url}`);
