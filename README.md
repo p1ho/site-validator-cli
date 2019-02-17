@@ -20,11 +20,11 @@ $ site-validator <url>
 This takes in the url you specify, generate the entire sitemap for that domain, and tries to validate each page found in the sitemap
 
 ## Options
-### Fail Fast MOde
+### Fail Fast Mode
 ```
 $ site-validator <url> --ff
 ```
-This flag will stop the checking at the first error and exit the process with 1.
+This flag will stop the checking at the first error.
 
 ### Verbose Mode
 ```
