@@ -220,7 +220,7 @@ Main Process
       }
       console.log('__________________________________');
       if (options.failfast && pagesFail.length > 0) {
-        console.log("\n" + red_on_black("Mode Fail Fast. Site Failed Validation. Exit"));
+        console.log("\n" + red_on_black("Fast Fail Mode: Site Failed Validation") + ' \n');
         process.exit(1);
       } else {
         await validateNextPage();
