@@ -20,16 +20,24 @@ $ site-validator <url>
 This takes in the url you specify, generate the entire sitemap for that domain, and tries to validate each page found in the sitemap
 
 ## Options
+### Fail Fast MOde
+```
+$ site-validator <url> --ff
+```
+This flag will stop the checking at the first error and exit the process with 1.
+
 ### Verbose Mode
 ```
 $ site-validator <url> --verbose
 ```
 This flag will pretty-print out the errors/warnings. Without it, it'll only tell you whether the page validated without outputting the actual errors.
+
 ### Quiet Mode
 ```
 $ site-validator <url> --quiet
 ```
 This flag will ignore warnings or informational messages.
+
 ### Caching
 ```
 $ site-validator <url> --cacheTime <minutes>
@@ -42,6 +50,7 @@ The caches will be stored in the cache folder.
 $ site-validator <url> --verbose --quiet --cacheTime <minutes>
 ```
 The optional parameters can be chained in any order, as long as they are behind the URL that is being evaluated.
+
 ## Acknowledgement
 * I have gotten a lot of help from [zrrrzzt](https://github.com/zrrrzzt) who actually gave me a [working starter code](https://gist.github.com/zrrrzzt/f0f2e5d64f2b69b330f377423717d7a7).
 
