@@ -1,19 +1,18 @@
 #!/usr/bin/env node
 'use strict'
 
-
 /*
 Require statements
  */
 const fs               = require('fs');
 const path             = require('path');
 const normalizer       = require('normalize-url');
-const SitemapGenerator = require('sitemap-generator');
 const validator        = require('html-validator');
 const xml_parser       = require('fast-xml-parser');
 const minimist         = require('minimist');
 const clc              = require('cli-color');
 const flat_cache       = require('flat-cache');
+const urlsFromCrawling = require('./lib/getUrlsFromCrawler');
 const getHelpText      = require('./lib/getHelpText');
 const pkg              = require('./package.json');
 
@@ -45,7 +44,6 @@ var now = new Date().getTime();
 Init Cache
  */
 if (options.cacheTime !== 0) {
-  var xml_cache = flat_cache.load('xml_cache', path.resolve('./cache'));
   var w3c_cache = flat_cache.load('w3c_cache', path.resolve('./cache'));
   var expire = now + options.cacheTime;
 }
@@ -71,75 +69,15 @@ Main Process
  */
 (async () => {
 
-  function generateSitemap (url) {
-    return new Promise(async (resolve, reject) => {
-      try {
-
-        let filepath = `./sitemap.xml`;
-        const generator = SitemapGenerator(url, {
-          maxDepth: 0,
-          filepath: filepath,
-          maxEntriesPerFile: 50000,
-          stripQuerystring: true,
-        });
-
-        const get_urls = (json) => {
-          if (json.urlset.url.length === 1 || json.urlset.url.length === undefined) {
-            var urls = [json.urlset.url.loc];
-          } else {
-            var urls = json.urlset.url.map( o => {return o.loc} );
-          }
-          var urls_trim = urls.filter( url => !/(\.pdf)$/i.test(url) );
-          return urls_trim;
-        }
-
-        const get_sitemap = (url) => {
-          generator.on('done', async () => {
-            console.log("\n" + green_on_black("Success") + ` Sitemap generated for ${url}`);
-            var data = fs.readFileSync(filepath, 'utf8');
-            if (options.cacheTime !== 0) {
-              var cache_new = {
-                expire: expire,
-                data: data,
-              };
-              xml_cache.setKey(options.url, cache_new);
-              xml_cache.save(true);
-            }
-            var urls = get_urls(xml_parser.parse(data));
-            return resolve(urls);
-          });
-          generator.start();
-        }
-
-        if (options.cacheTime !== 0 && xml_cache !== undefined) {
-          let cache_old = xml_cache.getKey(options.url);
-          if (cache_old !== undefined && cache_old.expire >= now) {
-            console.log("\n" + green_on_black("Success") + ` Sitemap cache found for ${url}`);
-            let data_json = xml_parser.parse(cache_old.data);
-            return resolve(get_urls(data_json));
-          } else {
-            console.log(`\nSitemap cache not available, refetching Sitemap for ${url} ...`);
-            get_sitemap(options.url);
-          }
-        } else {
-          console.log(`\nFetching Sitemap for ${url} ...`);
-          get_sitemap(options.url);
-        }
-
-      } catch (error) {
-        return reject(error);
-      }
-    });
-  }
-
   function isValidHtml (result, quiet) {
     var err = (quiet) ? result.messages.filter(m => m.type === 'error') : result.messages;
     return err.length === 0;
   }
 
-  let pagesToValidate = await generateSitemap(options.url);
+  let pagesToValidate = await urlsFromCrawling(options.url, options.cacheTime);
   let pagesTotal = pagesToValidate.length;
   console.log(`\nEvaluating a total of ${pagesTotal} pages`);
+
 
   let pagesFail = [];
 
