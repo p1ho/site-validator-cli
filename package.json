@@ -21,7 +21,9 @@
     "normalize-url": "4.1.0",
     "simplecrawler": "1.1.6"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "standard": "12.0.1"
+  },
   "scripts": {
     "test": "mocha"
   },
