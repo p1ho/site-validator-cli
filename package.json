@@ -25,6 +25,8 @@
     "standard": "12.0.1"
   },
   "scripts": {
+    "test": "standard && npm audit && ava",
+    "test-offline": "standard && ava",
     "standard-fix": "standard --fix"
   },
   "keywords": [
