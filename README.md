@@ -15,9 +15,42 @@ This makes it so ```$ site-validator``` can be used as the keyword instead of ``
 
 ## Usage
 ```
+$ site-validator <url-or-path-to-file>
+```
+
+### Url
+```
 $ site-validator <url>
 ```
 This takes in the url you specify, generate the entire sitemap for that domain, and tries to validate each page found in the sitemap
+
+### File - json
+```
+$ site-validator <path-to-json-file>
+```
+
+Expects a json-file with an array of urls and tries to validate each page found in the array
+
+```JavaScript
+[
+  "https://alheimsins.net/",
+  "https://alheimsins.net/projects/",
+  "https://alheimsins.net/changes/"
+]
+```
+
+### File - txt
+```
+$ site-validator <path-to-txt-file>
+```
+
+Expects a txt-file with 1 url on each line and tries to validate each page found in the file
+
+```
+https://alheimsins.net/
+https://alheimsins.net/projects/
+https://alheimsins.net/changes/
+```
 
 ## Options
 ### Fail Fast Mode
