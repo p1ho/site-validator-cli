@@ -14,6 +14,7 @@ const urlsFromCrawling = require('./lib/getUrlsFromCrawler')
 const urlsFromFile = require('./lib/get-urls-from-file')
 const getHelpText = require('./lib/getHelpText')
 const pkg = require('./package.json')
+const checkIfIsFile = require('./lib/is-file')
 
 /*
 Define text styling
@@ -51,10 +52,6 @@ if (options.cacheTime !== 0) {
 Process query parameters
  */
 
-function isFile (input) {
-  return !input.toLowerCase().startsWith('http')
-}
-
 if (!query || process.argv.indexOf('-h') !== -1 || process.argv.indexOf('--help') !== -1) {
   console.log(getHelpText())
   process.exit(0)
@@ -65,9 +62,11 @@ if (!query || process.argv.indexOf('-v') !== -1 || process.argv.indexOf('--versi
   process.exit(0)
 }
 
+const isFile = checkIfIsFile(argv._[0])
+
 options.url = argv.url ? normalizer(argv.url) : normalizer(argv._[0])
 
-options.file = argv.file ? argv.file : isFile(argv._[0]) ? argv._[0] : false;
+options.file = argv.file ? argv.file : isFile ? argv._[0] : false;
 
 /*
 Main Process
