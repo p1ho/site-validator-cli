@@ -10,9 +10,9 @@ const validator = require('html-validator')
 const minimist = require('minimist')
 const clc = require('cli-color')
 const flatCache = require('flat-cache')
-const urlsFromCrawling = require('./lib/getUrlsFromCrawler')
+const urlsFromCrawling = require('./lib/get-urls-from-crawler')
 const urlsFromFile = require('./lib/get-urls-from-file')
-const getHelpText = require('./lib/getHelpText')
+const getHelpText = require('./lib/get-help-text')
 const pkg = require('./package.json')
 const fileExists = require('./lib/file-exists')
 
@@ -30,9 +30,6 @@ Parsing query parameters
  */
 const query = process.argv[2]
 const argv = minimist(process.argv.slice(2))
-
-console.log(query)
-console.log(argv)
 
 let options = {
   cacheTime: argv.cacheTime !== undefined ? argv.cacheTime * 1000 * 60 : 0,
@@ -54,13 +51,14 @@ if (options.cacheTime !== 0) {
 /*
 Process query parameters
  */
-
-if (!query || process.argv.indexOf('-h') !== -1 || process.argv.indexOf('--help') !== -1) {
+var helpKW = ['help','-h','--help']
+if (!query || helpKW.map( x => { return process.argv.indexOf(x) !== -1} ).indexOf(true) !== -1) {
   console.log(getHelpText())
   process.exit(0)
 }
 
-if (!query || process.argv.indexOf('-v') !== -1 || process.argv.indexOf('--version') !== -1) {
+var versionKW = ['version', '-v', '--version']
+if (versionKW.map( x => { return process.argv.indexOf(x) !== -1} ).indexOf(true) !== -1) {
   console.log(pkg.version)
   process.exit(0)
 }
