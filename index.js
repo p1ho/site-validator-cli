@@ -14,7 +14,7 @@ const urlsFromCrawling = require('./lib/getUrlsFromCrawler')
 const urlsFromFile = require('./lib/get-urls-from-file')
 const getHelpText = require('./lib/getHelpText')
 const pkg = require('./package.json')
-const checkIfIsFile = require('./lib/is-file')
+const fileExists = require('./lib/file-exists')
 
 /*
 Define text styling
@@ -30,6 +30,9 @@ Parsing query parameters
  */
 const query = process.argv[2]
 const argv = minimist(process.argv.slice(2))
+
+console.log(query)
+console.log(argv)
 
 let options = {
   cacheTime: argv.cacheTime !== undefined ? argv.cacheTime * 1000 * 60 : 0,
@@ -62,11 +65,18 @@ if (!query || process.argv.indexOf('-v') !== -1 || process.argv.indexOf('--versi
   process.exit(0)
 }
 
-const isFile = checkIfIsFile(argv._[0])
+options.url = argv.url ? normalizer(argv.url) : argv._[0] ? normalizer(argv._[0]) : false
 
-options.url = argv.url ? normalizer(argv.url) : normalizer(argv._[0])
-
-options.file = argv.file ? argv.file : isFile ? argv._[0] : false;
+if (argv.file) {
+  if (fileExists(argv.file)) {
+    options.file = argv.file
+  } else {
+    console.error('File not found!')
+    process.exit(1)
+  }
+} else {
+  options.file = fileExists(argv._[0]) ? argv._[0] : false
+}
 
 /*
 Main Process
