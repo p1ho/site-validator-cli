@@ -84,6 +84,11 @@ $ site-validator <url> --verbose --quiet --cacheTime <minutes>
 ```
 The optional parameters can be chained in any order, as long as they are behind the URL that is being evaluated.
 
+If it's more convenient, you can also put url / path-to-file at the end
+```
+$ site-validator --verbose --quiet --url <url>
+$ site-validator --verbose --quiet --file <file>
+```
 ## Acknowledgement
 * I have gotten a lot of help from [zrrrzzt](https://github.com/zrrrzzt) who actually gave me a [working starter code](https://gist.github.com/zrrrzzt/f0f2e5d64f2b69b330f377423717d7a7).
 
