@@ -158,12 +158,20 @@ Main Process
           printResult(JSON.parse(cacheOld.data))
         } else {
           console.log('\nPage validation cache not available, revalidating...')
-          let result = await getResult(pageUrl)
-          printResult(JSON.parse(result))
+          try {
+            let result = await getResult(pageUrl)
+            printResult(JSON.parse(result))
+          } catch (error) {
+            console.log(redOnBlack(error) + ` ${pageUrl}`)
+          }
         }
       } else {
-        let result = await getResult(pageUrl)
-        printResult(JSON.parse(result))
+        try {
+          let result = await getResult(pageUrl)
+          printResult(JSON.parse(result))
+        } catch (error) {
+          console.log(redOnBlack(error) + ` ${pageUrl}`)
+        }
       }
       console.log('__________________________________')
       if (options.failfast && pagesFail.length > 0) {
