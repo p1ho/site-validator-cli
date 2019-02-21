@@ -51,8 +51,8 @@ if (options.cacheTime !== 0) {
 Process query parameters
  */
 
-function isUrl (input) {
-  return input.toLowerCase().startsWith('http')
+function isFile (input) {
+  return !input.toLowerCase().startsWith('http')
 }
 
 if (!query || process.argv.indexOf('-h') !== -1 || process.argv.indexOf('--help') !== -1) {
@@ -65,9 +65,9 @@ if (!query || process.argv.indexOf('-v') !== -1 || process.argv.indexOf('--versi
   process.exit(0)
 }
 
-options.url = argv.url ? normalizer(argv.url) : isUrl(argv._[0]) ? normalizer(argv._[0]) : false
+options.url = argv.url ? normalizer(argv.url) : normalizer(argv._[0])
 
-options.file = argv.file ? argv.file : !isUrl(argv._[0]) ? argv._[0] : false;
+options.file = argv.file ? argv.file : isFile(argv._[0]) ? argv._[0] : false;
 
 /*
 Main Process
@@ -78,7 +78,7 @@ Main Process
     return err.length === 0
   }
 
-  let pagesToValidate = options.url !== false ? await urlsFromCrawling(options.url, options.cacheTime) : urlsFromFile(options.file)
+  let pagesToValidate = options.file === false ? await urlsFromCrawling(options.url, options.cacheTime) : urlsFromFile(options.file)
   let pagesTotal = pagesToValidate.length
   console.log(`\nEvaluating a total of ${pagesTotal} pages`)
 
