@@ -158,12 +158,20 @@ Main Process
           printResult(JSON.parse(cacheOld.data))
         } else {
           console.log('\nPage validation cache not available, revalidating...')
-          let result = await getResult(pageUrl)
-          printResult(JSON.parse(result))
+          try {
+            let result = await getResult(pageUrl)
+            printResult(JSON.parse(result))
+          } catch (error) {
+            console.log(redOnBlack(error) + ` ${pageUrl}`)
+          }
         }
       } else {
-        let result = await getResult(pageUrl)
-        printResult(JSON.parse(result))
+        try {
+          let result = await getResult(pageUrl)
+          printResult(JSON.parse(result))
+        } catch (error) {
+          console.log(redOnBlack(error) + ` ${pageUrl}`)
+        }
       }
       console.log('__________________________________')
       if (options.failfast && pagesFail.length > 0) {
@@ -174,10 +182,10 @@ Main Process
       }
     } else {
       if (pagesFail.length === 0) {
-        console.log('\n' + greenOnBlack('Site Validated') + ` No problems were found for ${options.url}`)
+        console.log('\n' + greenOnBlack('Site Validated') + ` No problems were found for ${options.file || options.url}`)
       } else {
         console.log('\n' + redOnBlack('Site Failed Validation') +
-        ` ${pagesFail.length} out of ${pagesTotal} pages failed validation for ${options.url}:\n`)
+        ` ${pagesFail.length} out of ${pagesTotal} pages failed validation for ${options.file || options.url}:\n`)
         pagesFail.forEach((e) => { console.log(e) })
       }
       console.log(cyanOnBlack('\nFinished Checking, have an A-1 Day!') + ' \n')
