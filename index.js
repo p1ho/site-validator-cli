@@ -11,8 +11,10 @@ const minimist = require('minimist')
 const clc = require('cli-color')
 const flatCache = require('flat-cache')
 const urlsFromCrawling = require('./lib/getUrlsFromCrawler')
+const urlsFromFile = require('./lib/get-urls-from-file')
 const getHelpText = require('./lib/getHelpText')
 const pkg = require('./package.json')
+const fileExists = require('./lib/file-exists')
 
 /*
 Define text styling
@@ -28,6 +30,9 @@ Parsing query parameters
  */
 const query = process.argv[2]
 const argv = minimist(process.argv.slice(2))
+
+console.log(query)
+console.log(argv)
 
 let options = {
   cacheTime: argv.cacheTime !== undefined ? argv.cacheTime * 1000 * 60 : 0,
@@ -49,6 +54,7 @@ if (options.cacheTime !== 0) {
 /*
 Process query parameters
  */
+
 if (!query || process.argv.indexOf('-h') !== -1 || process.argv.indexOf('--help') !== -1) {
   console.log(getHelpText())
   process.exit(0)
@@ -59,7 +65,18 @@ if (!query || process.argv.indexOf('-v') !== -1 || process.argv.indexOf('--versi
   process.exit(0)
 }
 
-options.url = argv.url ? normalizer(argv.url) : normalizer(argv._[0]);
+options.url = argv.url ? normalizer(argv.url) : argv._[0] ? normalizer(argv._[0]) : false
+
+if (argv.file) {
+  if (fileExists(argv.file)) {
+    options.file = argv.file
+  } else {
+    console.error('File not found!')
+    process.exit(1)
+  }
+} else {
+  options.file = fileExists(argv._[0]) ? argv._[0] : false
+}
 
 /*
 Main Process
@@ -70,7 +87,7 @@ Main Process
     return err.length === 0
   }
 
-  let pagesToValidate = await urlsFromCrawling(options.url, options.cacheTime)
+  let pagesToValidate = options.file === false ? await urlsFromCrawling(options.url, options.cacheTime) : urlsFromFile(options.file)
   let pagesTotal = pagesToValidate.length
   console.log(`\nEvaluating a total of ${pagesTotal} pages`)
 
