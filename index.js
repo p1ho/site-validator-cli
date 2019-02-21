@@ -51,14 +51,14 @@ if (options.cacheTime !== 0) {
 /*
 Process query parameters
  */
-var helpKW = ['help','-h','--help']
-if (!query || helpKW.map( x => { return process.argv.indexOf(x) !== -1} ).indexOf(true) !== -1) {
+var helpKW = ['help', '-h', '--help']
+if (!query || helpKW.map(x => { return process.argv.indexOf(x) !== -1 }).indexOf(true) !== -1) {
   console.log(getHelpText())
   process.exit(0)
 }
 
 var versionKW = ['version', '-v', '--version']
-if (versionKW.map( x => { return process.argv.indexOf(x) !== -1} ).indexOf(true) !== -1) {
+if (versionKW.map(x => { return process.argv.indexOf(x) !== -1 }).indexOf(true) !== -1) {
   console.log(pkg.version)
   process.exit(0)
 }
