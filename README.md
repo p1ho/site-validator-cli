@@ -52,6 +52,28 @@ https://alheimsins.net/projects/
 https://alheimsins.net/changes/
 ```
 
+### File - xml
+```
+$ site-validator <path-to-xml-file>
+```
+
+Expects a xml-file with the following format
+
+```XML
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset>
+  <url>
+    <loc>https://alheimsins.net/</loc>
+  </url>
+  <url>
+    <loc>https://alheimsins.net/projects/</loc>
+  </url>
+  <url>
+    <loc>https://alheimsins.net/changes/</loc>
+  </url>
+</urlset>
+```
+
 ## Options
 ### Fail Fast Mode
 ```
