@@ -6,13 +6,14 @@ Require statements
  */
 const normalizer = require('normalize-url')
 const minimist = require('minimist')
-
+const clc = require('cli-color')
 const getUrls = require('./lib/get-urls/get-urls')
 const fileExists = require('./lib/file-exists')
 const processPages = require('./lib/validate-pages/process-pages')
 const getHelpText = require('./lib/get-help-text')
-
 const pkg = require('./package.json')
+
+var redOnBlack = clc.xterm(196).bgXterm(0)
 
 /*
 Parsing query parameters
@@ -64,5 +65,10 @@ Main Process
  */
 (async () => {
   let pagesToValidate = await getUrls(options)
-  processPages(pagesToValidate, options)
+  if (pagesToValidate.length !== 0) {
+    processPages(pagesToValidate, options)
+  } else {
+    console.log('\n' + redOnBlack('No Urls found') + ' exiting...\n')
+    process.exit(1)
+  }
 })()
