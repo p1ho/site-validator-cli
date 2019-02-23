@@ -53,7 +53,7 @@ if (argv.file) {
   if (fileExists(argv.file)) {
     options.file = argv.file
   } else {
-    console.error('File not found!')
+    console.error(redOnBlack('File not found!'))
     process.exit(1)
   }
 } else {
@@ -64,11 +64,11 @@ if (argv.file) {
 Main Process
  */
 (async () => {
-  let pagesToValidate = await getUrls(options)
-  if (pagesToValidate.length !== 0) {
+  try {
+    let pagesToValidate = await getUrls(options)
     processPages(pagesToValidate, options)
-  } else {
-    console.log('\n' + redOnBlack('No Urls found') + ' exiting...\n')
+  } catch (error) {
+    console.error('\n' + redOnBlack(error) + ' exiting...\n')
     process.exit(1)
   }
 })()
