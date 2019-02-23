@@ -7,9 +7,9 @@ Require statements
 const normalizer = require('normalize-url')
 const minimist = require('minimist')
 const clc = require('cli-color')
-const getUrls = require('./lib/get-urls/get-urls')
+const getUrls = require('./lib/get-urls')
 const fileExists = require('./lib/file-exists')
-const processPages = require('./lib/validate-pages/process-pages')
+const processPages = require('./lib/validate-pages')
 const getHelpText = require('./lib/get-help-text')
 const pkg = require('./package.json')
 
