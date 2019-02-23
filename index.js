@@ -25,7 +25,8 @@ let options = {
   cacheTime: argv.cacheTime !== undefined ? argv.cacheTime * 1000 * 60 : 0,
   failfast: argv.ff !== undefined,
   verbose: argv.verbose !== undefined,
-  quiet: argv.quiet !== undefined
+  quiet: argv.quiet !== undefined,
+  debug: argv.debug !== undefined
 }
 
 /*
