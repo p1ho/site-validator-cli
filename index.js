@@ -9,7 +9,7 @@ const minimist = require('minimist')
 const clc = require('cli-color')
 const getUrls = require('./lib/get-urls')
 const fileExists = require('./lib/file-exists')
-const processPages = require('./lib/validate-pages')
+const validatePages = require('./lib/validate-pages')
 const getHelpText = require('./lib/get-help-text')
 const pkg = require('./package.json')
 
@@ -67,7 +67,7 @@ Main Process
 (async () => {
   try {
     let pagesToValidate = await getUrls(options)
-    processPages(pagesToValidate, options)
+    validatePages(pagesToValidate, options)
   } catch (error) {
     console.error('\n' + redOnBlack(error) + ' exiting...\n')
     process.exit(1)
