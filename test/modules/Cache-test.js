@@ -2,22 +2,22 @@ const test = require('ava')
 const path = require('path')
 const Cache = require('../../lib/Cache')
 const fileExists = require('../../lib/file-exists')
-const cachePath = path.resolve('./cache/test')
+const cachePath = path.resolve(`${__dirname}/../../cache/sitemap/`)
 
-test('it returns true if cache has been successfully created', t => {
+test('cache file can be created', t => {
   var cache = new Cache('test', cachePath)
   cache.save(true)
   t.is(true, fileExists('cache/test/test'))
 })
 
-test('it returns true if key/value is set successfully', t => {
+test("cache's key/value can be set", t => {
   var cache = new Cache('test', cachePath)
   cache.setKey('key', 'value')
   t.is(true, cache.getKey('key') === 'value')
   cache.save()
 })
 
-test('it returns true if key is removed successfully', t => {
+test('cache key can be removed', t => {
   var cache = new Cache('test', cachePath)
   t.is(true, cache.getKey('key') === 'value')
   cache.removeKey('key')
@@ -25,7 +25,7 @@ test('it returns true if key is removed successfully', t => {
   cache.save()
 })
 
-test('it returns true if expiration works', t => {
+test('cache expiration works', t => {
   var cache = new Cache('test', cachePath, 1 / 60)
   cache.setKey('key', 'value expires in 1 second')
   t.is(true, cache.getKey('key') === 'value expires in 1 second')
@@ -34,7 +34,7 @@ test('it returns true if expiration works', t => {
   }, 1001)
 })
 
-test('it returns true if cache has been removed', t => {
+test('cache file can be removed', t => {
   var cache = new Cache('test', cachePath)
   cache.remove()
   t.is(true, !fileExists('cache/test/test'))
