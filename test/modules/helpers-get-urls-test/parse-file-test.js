@@ -1,7 +1,6 @@
 const test = require('ava')
 const { readFileSync } = require('fs')
 const parseFile = require('../../../lib/helpers-get-urls/parse-file')
-const { arraysAreEqual } = require('../../../lib/test-helpers')
 const expectedOutput = ['https://alheimsins.net/',
   'https://alheimsins.net/projects/',
   'https://alheimsins.net/changes/']
@@ -9,15 +8,15 @@ const expectedOutput = ['https://alheimsins.net/',
 test('well formed data stream can be parsed', t => {
   var dataFromJson = readFileSync('test/data/urls.json', 'utf-8').toString()
   var urlsFromJson = parseFile('json', dataFromJson)
-  t.is(true, arraysAreEqual(urlsFromJson, expectedOutput))
+  t.deepEqual(urlsFromJson, expectedOutput)
 
   var dataFromTxt = readFileSync('test/data/urls.txt', 'utf-8').toString()
   var urlsFromTxt = parseFile('txt', dataFromTxt)
-  t.is(true, arraysAreEqual(urlsFromTxt, expectedOutput))
+  t.deepEqual(urlsFromTxt, expectedOutput)
 
   var dataFromXml = readFileSync('test/data/sitemap.xml', 'utf-8').toString()
   var urlsFromXml = parseFile('xml', dataFromXml)
-  t.is(true, arraysAreEqual(urlsFromXml, expectedOutput))
+  t.deepEqual(urlsFromXml, expectedOutput)
 })
 
 test('non-matching file type throws error', t => {
