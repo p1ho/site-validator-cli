@@ -2,7 +2,7 @@ const test = require('ava')
 const path = require('path')
 const Cache = require('../../lib/Cache')
 const fileExists = require('../../lib/file-exists')
-const cachePath = path.resolve(`${__dirname}/../../cache/sitemap/`)
+const cachePath = path.resolve(`${__dirname}/../../cache/test/`)
 
 test('cache file can be created', t => {
   var cache = new Cache('test', cachePath)
@@ -13,24 +13,24 @@ test('cache file can be created', t => {
 test("cache's key/value can be set", t => {
   var cache = new Cache('test', cachePath)
   cache.setKey('key', 'value')
-  t.is(true, cache.getKey('key') === 'value')
+  t.is(cache.getKey('key'), 'value')
   cache.save()
 })
 
 test('cache key can be removed', t => {
   var cache = new Cache('test', cachePath)
-  t.is(true, cache.getKey('key') === 'value')
+  t.is(cache.getKey('key'), 'value')
   cache.removeKey('key')
-  t.is(true, cache.getKey('key') === undefined)
+  t.is(cache.getKey('key'), undefined)
   cache.save()
 })
 
 test('cache expiration works', t => {
   var cache = new Cache('test', cachePath, 1 / 60)
   cache.setKey('key', 'value expires in 1 second')
-  t.is(true, cache.getKey('key') === 'value expires in 1 second')
+  t.is(cache.getKey('key'), 'value expires in 1 second')
   setTimeout(() => {
-    t.is(true, cache.getKey('key') === undefined)
+    t.is(cache.getKey('key'), undefined)
   }, 1001)
 })
 
