@@ -14,22 +14,20 @@ test('existing file can be fetched', async (t) => {
   t.is(true, arraysAreEqual(urlsFromXml, expectedOutput))
 })
 
-test('non existing files fails', async (t) => {
-  var failed
-  try {
-    await (fetchFile('http://this-does-not-exist.com/urls.txt'))
-  } catch (error) {
-    failed = true
-  }
-  t.is(failed, true)
+test('non existing server fails', async (t) => {
+  await t.throwsAsync(async () => {
+    await fetchFile('http://this-does-not-exist.com/urls.txt')
+  })
+})
+
+test('existing server but non existing file fails', async (t) => {
+  await t.throwsAsync(async () => {
+    await fetchFile('https://raw.githubusercontent.com/p1ho/site-validator-cli/master/test/data/does-not-exist.json')
+  })
 })
 
 test('redirect fails (http -> https)', async (t) => {
-  var failed
-  try {
-    await (fetchFile('http://raw.githubusercontent.com/p1ho/site-validator-cli/master/test/data/urls.json'))
-  } catch (error) {
-    failed = true
-  }
-  t.is(failed, true)
+  await t.throwsAsync(async () => {
+    await fetchFile('http://raw.githubusercontent.com/p1ho/site-validator-cli/master/test/data/urls.json')
+  })
 })
