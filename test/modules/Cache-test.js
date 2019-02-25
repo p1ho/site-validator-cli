@@ -2,7 +2,7 @@ const test = require('ava')
 const path = require('path')
 const Cache = require('../../lib/Cache')
 const fileExists = require('../../lib/file-exists')
-const cachePath = path.resolve('cache/test')
+const cachePath = path.resolve('./cache/test')
 
 test('it returns true if cache has been successfully created', t => {
   var cache = new Cache('test', cachePath)
