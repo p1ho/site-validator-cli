@@ -26,7 +26,8 @@ let options = {
   failfast: argv.ff !== undefined,
   verbose: argv.verbose !== undefined,
   quiet: argv.quiet !== undefined,
-  debug: argv.debug !== undefined
+  debug: argv.debug !== undefined,
+  singlePage: argv.page !== undefined
 }
 
 /*
