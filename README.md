@@ -24,6 +24,13 @@ $ site-validator <url>
 ```
 This takes in the url you specify, generate the entire sitemap for that domain, and tries to validate each page found in the sitemap
 
+#### Url - single page
+```
+$ site-validator <url> --page
+```
+
+This takes in the url you specify and tries to validate it
+
 ### File - json
 ```
 $ site-validator <path-to-json-file>
