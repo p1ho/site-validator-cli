@@ -1,8 +1,9 @@
 const test = require('ava')
 const fetchFile = require('../../../lib/helpers-get-urls/fetch-file')
-const expectedOutput = ['https://alheimsins.net/',
-  'https://alheimsins.net/projects/',
-  'https://alheimsins.net/changes/']
+const expectedOutput = [
+  'https://p1ho.github.io/site-validator-cli/test/data/site/index.html',
+  'https://p1ho.github.io/site-validator-cli/test/data/site/page.html',
+  'https://p1ho.github.io/site-validator-cli/test/data/site/from_page.html']
 
 test('existing file can be fetched', async (t) => {
   var urlsFromJson = await (fetchFile('https://raw.githubusercontent.com/p1ho/site-validator-cli/master/test/data/urls.json'))

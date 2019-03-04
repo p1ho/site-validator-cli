@@ -1,9 +1,10 @@
 const test = require('ava')
 const { readFileSync } = require('fs')
 const parseFile = require('../../../lib/helpers-get-urls/parse-file')
-const expectedOutput = ['https://alheimsins.net/',
-  'https://alheimsins.net/projects/',
-  'https://alheimsins.net/changes/']
+const expectedOutput = [
+  'https://p1ho.github.io/site-validator-cli/test/data/site/index.html',
+  'https://p1ho.github.io/site-validator-cli/test/data/site/page.html',
+  'https://p1ho.github.io/site-validator-cli/test/data/site/from_page.html']
 
 test('well formed data stream can be parsed', t => {
   var dataFromJson = readFileSync('test/data/urls.json', 'utf-8').toString()
@@ -33,7 +34,7 @@ test('unallowed filetype throws error', t => {
 test('invalid/unallowed json format throws error', t => {
   t.throws(() => { parseFile('json', '[') })
   t.throws(() => { parseFile('json', '{}') })
-  t.throws(() => { parseFile('json', '{"urls":["https://alheimsins.net/"]}') })
+  t.throws(() => { parseFile('json', '{"urls":["https://p1ho.github.io/site-validator-cli/test/data/site/index.html"]}') })
 })
 
 test('invalid/unallowed xml format throws error', t => {
