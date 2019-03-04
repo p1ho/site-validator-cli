@@ -4,23 +4,16 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
 
 
 <url>
-  <loc>https://alheimsins.net/</loc>
-  <lastmod>2018-03-13T04:01:13+00:00</lastmod>
-  <priority>1.00</priority>
+  <loc>https://p1ho.github.io/site-validator-cli/test/data/site/index.html</loc>
 </url>
 <url>
-  <loc>https://alheimsins.net/projects/</loc>
-  <lastmod>2018-03-13T08:07:42+00:00</lastmod>
-  <priority>0.80</priority>
+  <loc>https://p1ho.github.io/site-validator-cli/test/data/site/page.html</loc>
 </url>
 <url>
-  <loc>https://alheimsins.net/changes/</loc>
-  <lastmod>2018-03-14T18:03:03+00:00</lastmod>
-  <priority>0.80</priority>
+  <loc>https://p1ho.github.io/site-validator-cli/test/data/site/from_page.html</loc>
 </url>
 
 
