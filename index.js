@@ -52,6 +52,10 @@ if (argv.url) {
 }
 
 if (argv.file) {
+  if (options.singlePage) {
+    console.error(redOnBlack('page flag cannot be use with file!'))
+    process.exit(1)
+  }
   if (fileExists(argv.file)) {
     options.file = argv.file
   } else {
