@@ -4,16 +4,13 @@
 /*
 Require statements
  */
-const normalizer = require('normalize-url')
 const minimist = require('minimist')
-const clc = require('cli-color')
 const getUrls = require('./lib/get-urls')
-const fileExists = require('./lib/file-exists')
 const validatePages = require('./lib/validate-pages')
 const getHelpText = require('./lib/get-help-text')
 const pkg = require('./package.json')
-
-var redOnBlack = clc.xterm(196).bgXterm(0)
+const exit = require('./lib/exit')
+const { redOnBlack } = require('./lib/clc')
 
 /*
 Parsing query parameters
@@ -35,35 +32,18 @@ Process query parameters
  */
 var helpKW = ['help', '-h', '--help']
 if (!query || helpKW.map(x => { return process.argv.indexOf(x) !== -1 }).indexOf(true) !== -1) {
-  console.log(getHelpText())
-  process.exit(0)
+  exit(getHelpText())
 }
 
 var versionKW = ['version', '-v', '--version']
 if (versionKW.map(x => { return process.argv.indexOf(x) !== -1 }).indexOf(true) !== -1) {
-  console.log(pkg.version)
-  process.exit(0)
+  exit(pkg.version)
 }
 
-if (argv.url) {
-  options.url = normalizer(argv.url)
+if (argv.path) {
+  options.path = argv.path
 } else {
-  options.url = argv._[0] ? normalizer(argv._[0]) : false
-}
-
-if (argv.file) {
-  if (options.singlePage) {
-    console.error(redOnBlack('page flag cannot be use with file!'))
-    process.exit(1)
-  }
-  if (fileExists(argv.file)) {
-    options.file = argv.file
-  } else {
-    console.error(redOnBlack('File not found!'))
-    process.exit(1)
-  }
-} else {
-  options.file = fileExists(argv._[0]) ? argv._[0] : false
+  options.path = argv._[0]
 }
 
 /*
@@ -74,7 +54,6 @@ Main Process
     let pagesToValidate = await getUrls(options)
     validatePages(pagesToValidate, options)
   } catch (error) {
-    console.error('\n' + redOnBlack(error) + ' exiting...\n')
-    process.exit(1)
+    exit(`\n${redOnBlack(error)} exiting...\n`, true)
   }
 })()
