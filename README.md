@@ -1,5 +1,6 @@
 # site-validator-cli
-A CLI that takes a URL and retrieves its sitemap, then uses **[html-validator](https://www.npmjs.com/package/html-validator)** (a wrapper for https://validator.w3.org/nu/) to validate each page.
+A command line tool that takes a URL or a file, then uses **[html-validator](https://www.npmjs.com/package/html-validator)** (a wrapper for https://validator.w3.org/nu/) to validate each page.
+
 ## Installation
 This is not published on [npm](https://www.npmjs.com/) yet, so the following is how you could install the developer version.
 
@@ -14,35 +15,25 @@ $ npm link
 This makes it so ```$ site-validator``` can be used as the keyword instead of ```$ node index.js```
 
 ## Usage
-```
-$ site-validator <url-or-path-to-file>
-```
-
-### Url
+### URL
 ```
 $ site-validator <url>
 ```
-This takes in the url you specify, generate the entire sitemap for that domain, and tries to validate each page found in the sitemap
+This takes in the URL and will generate the entire sitemap, then tries to validate each page in the sitemap
 
-#### Url - single page
-```
-$ site-validator <url> --page
-```
-
-This takes in the url you specify and tries to validate it
 
 ### File - json
 ```
 $ site-validator <path-to-json-file>
 ```
 
-Expects a json-file with an array of urls and tries to validate each page found in the array
+Expects a json-file with an array of URLs and tries to validate each page found in the array
 
 ```JavaScript
 [
-  "https://alheimsins.net/",
-  "https://alheimsins.net/projects/",
-  "https://alheimsins.net/changes/"
+  "https://example.com/",
+  "https://example.com/about",
+  "https://example.com/projects"
 ]
 ```
 
@@ -51,12 +42,12 @@ Expects a json-file with an array of urls and tries to validate each page found 
 $ site-validator <path-to-txt-file>
 ```
 
-Expects a txt-file with 1 url on each line and tries to validate each page found in the file
+Expects a txt-file with 1 URL on each line and tries to validate each page found in the file
 
 ```
-https://alheimsins.net/
-https://alheimsins.net/projects/
-https://alheimsins.net/changes/
+https://example.com/
+https://example.com/about
+https://example.com/projects
 ```
 
 ### File - xml
@@ -70,58 +61,71 @@ Expects a xml-file with the following format
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset>
   <url>
-    <loc>https://alheimsins.net/</loc>
+    <loc>https://example.com/</loc>
   </url>
   <url>
-    <loc>https://alheimsins.net/projects/</loc>
+    <loc>https://example.com/about</loc>
   </url>
   <url>
-    <loc>https://alheimsins.net/changes/</loc>
+    <loc>https://example.com/projects</loc>
   </url>
 </urlset>
 ```
 
+### Online File
+If you would like to use an online file as a source of URLs (such as a hosted sitemap), you can also do
+```
+$ site-validator <path-to-online-file>
+```
+* Same file type and format restrictions apply.
+* No redirect is allowed, the path has to be exact on this one.
+
 ## Options
+### Single Page Mode
+```
+$ site-validator <url> --page
+```
+This validates the URL passed in without crawling.
+
 ### Fail Fast Mode
 ```
-$ site-validator <url> --ff
+$ site-validator <path> --ff
 ```
 This flag will stop the checking at the first error.
 
 ### Verbose Mode
 ```
-$ site-validator <url> --verbose
+$ site-validator <path> --verbose
 ```
 This flag will pretty-print out the errors/warnings. Without it, it'll only tell you whether the page validated without outputting the actual errors.
 
 ### Quiet Mode
 ```
-$ site-validator <url> --quiet
+$ site-validator <path> --quiet
 ```
 This flag will ignore warnings or informational messages.
 
 ### Caching
 ```
-$ site-validator <url> --cacheTime <minutes>
+$ site-validator <path> --cacheTime <minutes>
 ```
-Because sitemap generation, as well as getting their validation information can be costly, a caching mechanism is in place. Simply put in this flag and specify the number of minutes you'd like this cache to live.
+Because sitemap generation, as well as getting their validation information can be costly, a caching mechanism is in place. Simply put in this flag and specify the number of minutes you'd like the cache to persist.
 The caches will be stored in the cache folder.
 
 ### Chaining Options
 ```
-$ site-validator <url> --verbose --quiet --cacheTime <minutes>
+$ site-validator <path> --verbose --quiet --cacheTime <minutes>
 ```
 The optional parameters can be chained in any order, as long as they are behind the URL that is being evaluated.
 
-If it's more convenient, you can also put url / path-to-file at the end
+If it's more convenient, you can also put the path at the end.
 ```
-$ site-validator --verbose --quiet --url <url>
-$ site-validator --verbose --quiet --file <file>
+$ site-validator --verbose --quiet --path <path>
 ```
+## Contributors
+|![](https://github.com/p1ho.png?size=50)|![](https://github.com/zrrrzzt.png?size=50)|
+|---|---|
+|[p1ho](https://github.com/p1ho)|[zrrrzzt](https://github.com/zrrrzzt)|
+
 ## Acknowledgement
-* I have gotten a lot of help from [zrrrzzt](https://github.com/zrrrzzt) who actually gave me a [working starter code](https://gist.github.com/zrrrzzt/f0f2e5d64f2b69b330f377423717d7a7).
-
-* This module was inspired by **[w3c-vadlidator-cli](https://www.npmjs.com/package/w3c-validator-cli)**. Unfortunately, it has not been updated for a while, which prompted me to make this one. This module is essentially what that one would be had it been supported till today.
-
-## Contact
-I can be contacted at hopokuan@umich.edu
+This module was inspired by **[w3c-vadlidator-cli](https://www.npmjs.com/package/w3c-validator-cli)**. Unfortunately, it has not been updated for a while, which prompted me to make this one. This module is essentially what that one would be had it been supported till today.
