@@ -10,7 +10,6 @@ const validatePages = require('./lib/validate-pages')
 const getHelpText = require('./lib/get-help-text')
 const pkg = require('./package.json')
 const exit = require('./lib/exit')
-const { redOnBlack } = require('./lib/clc')
 
 /*
 Parsing query parameters
@@ -54,6 +53,6 @@ Main Process
     let pagesToValidate = await getUrls(options)
     validatePages(pagesToValidate, options)
   } catch (error) {
-    exit(`\n${redOnBlack(error)} exiting...\n`, true)
+    exit(error, true)
   }
 })()
