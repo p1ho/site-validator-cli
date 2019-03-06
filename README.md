@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.com/p1ho/site-validator-cli.svg?branch=master)](https://travis-ci.com/p1ho/site-validator-cli)
+[![Coverage Status](https://coveralls.io/repos/github/p1ho/site-validator-cli/badge.svg?branch=master)](https://coveralls.io/github/p1ho/site-validator-cli?branch=master)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
+
 # site-validator-cli
 A command line tool that takes a URL or a file, then uses **[html-validator](https://www.npmjs.com/package/html-validator)** (a wrapper for https://validator.w3.org/nu/) to validate each page.
 
