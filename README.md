@@ -120,7 +120,7 @@ If it's more convenient, you can also put the path at the end.
 $ site-validator --verbose --quiet --path <path>
 ```
 ## Contributors
-|![](https://github.com/p1ho.png?size=50)|![](https://github.com/zrrrzzt.png?size=50)|
+|[![](https://github.com/p1ho.png?size=50)](https://github.com/p1ho)|[![](https://github.com/zrrrzzt.png?size=50)](https://github.com/zrrrzzt)|
 |---|---|
 |[p1ho](https://github.com/p1ho)|[zrrrzzt](https://github.com/zrrrzzt)|
 
