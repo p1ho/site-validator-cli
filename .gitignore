@@ -1,2 +1,7 @@
 cache
 node_modules
+package-lock.json
+.DS_Store
+coverage
+.nyc_output
+.coveralls.yml
