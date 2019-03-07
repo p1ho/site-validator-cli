@@ -4,3 +4,4 @@ package-lock.json
 .DS_Store
 coverage
 .nyc_output
+.coveralls.yml
