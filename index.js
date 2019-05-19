@@ -18,7 +18,7 @@ const query = process.argv[2]
 const argv = minimist(process.argv.slice(2))
 
 let options = {
-  cacheTime: argv.cacheTime !== undefined ? argv.cacheTime : false,
+  cacheTime: argv.cacheTime !== undefined ? argv.cacheTime : argv.cache !== undefined ? argv.cache : false,
   failfast: argv.ff !== undefined,
   verbose: argv.verbose !== undefined,
   quiet: argv.quiet !== undefined,
