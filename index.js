@@ -23,7 +23,8 @@ let options = {
   verbose: argv.verbose !== undefined,
   quiet: argv.quiet !== undefined,
   debug: argv.debug !== undefined,
-  singlePage: argv.page !== undefined
+  singlePage: argv.page !== undefined,
+  isLocal: argv.isLocal !== undefined || argv.local !== undefined
 }
 
 /*
