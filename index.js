@@ -5,6 +5,7 @@
 Require statements
  */
 const minimist = require('minimist')
+const clearCache = require('./lib/clear-cache')
 const getUrls = require('./lib/get-urls')
 const validatePages = require('./lib/validate-pages')
 const getHelpText = require('./lib/get-help-text')
@@ -44,6 +45,13 @@ if (argv.path) {
   options.path = argv.path
 } else {
   options.path = argv._[0]
+}
+
+if (argv['clear-cache'] || argv['clearCache']) {
+  clearCache()
+  if (options.path === undefined) {
+    exit('No path entered, exiting...')
+  }
 }
 
 /*
