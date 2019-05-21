@@ -16,7 +16,7 @@
     "cli-color": "1.4.0",
     "fast-xml-parser": "3.12.13",
     "flat-cache": "2.0.1",
-    "html-validator": "^4.0.0",
+    "html-validator": "^4.0.3",
     "minimist": "1.2.0",
     "normalize-url": "4.1.0",
     "p-queue": "4.0.0",
