@@ -12,6 +12,22 @@ $ npm i site-validator-cli -g
 ```
 
 ## Usage
+
+### Get Help
+```
+$ site-validator
+$ site-validator -h
+$ site-validator help
+$ site-validator --help
+```
+
+### Get Version
+```
+$ site-validator -v
+$ site-validator version
+$ site-validator --version
+```
+
 ### URL
 ```
 $ site-validator <url>
@@ -104,14 +120,31 @@ This flag will ignore warnings or informational messages.
 
 ### Caching
 ```
-$ site-validator <path> --cacheTime <minutes>
+$ site-validator <path> --cache <minutes>
 ```
 Because sitemap generation, as well as getting their validation information can be costly, a caching mechanism is in place. Simply put in this flag and specify the number of minutes you'd like the cache to persist.
 The caches will be stored in the cache folder.
 
+### Clear Cache
+```
+$ site-validator --clear-cache
+```
+
+If you want to refetch and recache sitemap for a path:
+```
+$ site-validator <path> --cache <minutes> --clear-cache
+```
+
+### Local Mode
+```
+$ site-validator localhost:80/index.html --local
+```
+
+You must have a localhost server running.
+
 ### Chaining Options
 ```
-$ site-validator <path> --verbose --quiet --cacheTime <minutes>
+$ site-validator <path> --verbose --quiet --cache <minutes>
 ```
 The optional parameters can be chained in any order, as long as they are behind the URL that is being evaluated.
 
