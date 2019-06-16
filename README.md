@@ -94,10 +94,10 @@ $ site-validator <url-to-online-file>
 * No redirect is allowed, the path has to be exact on this one.
 
 ## Options
-| Flag | Description |
+| Flag &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | Description |
 | --- | --- |
 | `--page` | This validates the URL passed in without crawling. |
-| `--ff` | This flag will stop the checking at the first error.<br>(Note: does not work with `--output`) |
+| `--ff` | (Fail Fast) This flag will stop the checking at the first error.<br>(Note: does not work with `--output`) |
 | `--verbose` | This flag will pretty-print out the errors/warnings. Without it, it'll only tell you whether the page validated without outputting the actual errors. |
 | `--quiet` | This flag will ignore warnings or informational messages. |
 | `--local` | This expects the url to be a localhost url<br>(e.g. `localhost:80/index.html`) |
