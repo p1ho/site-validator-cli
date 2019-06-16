@@ -3,7 +3,7 @@
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
 
 # site-validator-cli
-A command line tool that takes a URL or a file, then uses **[html-validator](https://www.npmjs.com/package/html-validator)** (a wrapper for https://validator.w3.org/nu/) to validate each page.
+A command line tool that takes in a URL or a file, then uses **[html-validator](https://www.npmjs.com/package/html-validator)** (a wrapper for https://validator.w3.org/nu/) to validate each page.
 
 ## Installation
 Get [Node.js](https://nodejs.org/en/download/), then
@@ -88,74 +88,92 @@ Expects a xml-file with the following format
 ### Online File
 If you would like to use an online file as a source of URLs (such as a hosted sitemap), you can also do
 ```
-$ site-validator <path-to-online-file>
+$ site-validator <url-to-online-file>
 ```
 * Same file type and format restrictions apply.
 * No redirect is allowed, the path has to be exact on this one.
 
 ## Options
-### Single Page Mode
-```
-$ site-validator <url> --page
-```
-This validates the URL passed in without crawling.
+| <div style="width:80px;">Flag</div> | <div style="width:150px;">Flag</div> | Description |
+| --- | --- | --- |
+| **Single Page** | `--page` | This validates the URL passed in without crawling. |
+| **Fail Fast** | `--ff` | This flag will stop the checking at the first error.<br>(Note: does not work with `--output`) |
+| **Verbose** | `--verbose` | This flag will pretty-print out the errors/warnings. Without it, it'll only tell you whether the page validated without outputting the actual errors. |
+| **Quiet** | `--quiet` | This flag will ignore warnings or informational messages. |
+| **Local** | `--local` | This expects the url to be a localhost url<br>(e.g. `localhost:80/index.html`) |
+| **Cache** | `--cache <min>` | Because sitemap generation can take time, a caching mechanism is in place.<br>Simply put in this flag and specify the number of minutes you'd like the cache to persist.<br>The caches will be stored in the cache folder. |
+| **Clear Cache** | `--clear-cache` | `$ site-validator --clear-cache` clears all cached sitemaps.<br>If you want to refetch and recache sitemap for a url:<br>`$ site-validator <url> --cache <minutes> --clear-cache` |
+| **Output** | `--output <filename>` | Having this flag outputs a json file in the directory where<br>`$ site-validator` is run.<br>Filename is optional, default is current time in [ISO format](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString) |
 
-### Fail Fast Mode
-```
-$ site-validator <path> --ff
-```
-This flag will stop the checking at the first error.
+### Output Schema
 
-### Verbose Mode
+```JavaScript
+{
+  url: "url-entered",
+  pages: [
+    "crawled-page-1",
+    "crawled-page-2",
+    "crawled-page-3",
+    //...
+  ],
+  params: {
+    verbose: "boolean",
+    quiet: "boolean",
+    singlePage: "boolean"
+  },
+  passed: "boolean",
+  results: {
+    passed: [
+      {
+        url: "crawled-page",
+        status: "pass",
+        errors: []
+      },
+      //...
+    ],
+    failed: [
+      {
+        url: "crawled-page",
+        status: "fail",
+        errors: [
+          type: "error-type",
+          message: "error-message",
+          location: "error-location"
+        ]
+      },
+      {
+        url: "crawled-page-not-found",
+        status: "not found",
+        errors: []
+      },
+      {
+        url: "crawled-page-error",
+        status: "error",
+        errors: [
+          "error message"
+        ]
+      },
+      //...
+    ]
+  }
+}
 ```
-$ site-validator <path> --verbose
-```
-This flag will pretty-print out the errors/warnings. Without it, it'll only tell you whether the page validated without outputting the actual errors.
-
-### Quiet Mode
-```
-$ site-validator <path> --quiet
-```
-This flag will ignore warnings or informational messages.
-
-### Caching
-```
-$ site-validator <path> --cache <minutes>
-```
-Because sitemap generation, as well as getting their validation information can be costly, a caching mechanism is in place. Simply put in this flag and specify the number of minutes you'd like the cache to persist.
-The caches will be stored in the cache folder.
-
-### Clear Cache
-```
-$ site-validator --clear-cache
-```
-
-If you want to refetch and recache sitemap for a path:
-```
-$ site-validator <path> --cache <minutes> --clear-cache
-```
-
-### Local Mode
-```
-$ site-validator localhost:80/index.html --local
-```
-
-You must have a localhost server running.
 
 ### Chaining Options
 ```
-$ site-validator <path> --verbose --quiet --cache <minutes>
+$ site-validator <url> --verbose --quiet --cache <minutes>
 ```
-The optional parameters can be chained in any order, as long as they are behind the URL that is being evaluated.
+The option flags can be chained in any order, as long as they are behind the url that is being evaluated.
 
-If it's more convenient, you can also put the path at the end.
+If it's more convenient, you can also put the url at the end.
 ```
-$ site-validator --verbose --quiet --path <path>
+$ site-validator --verbose --quiet --path <url>
 ```
+
 ## Contributors
 |[![](https://github.com/p1ho.png?size=50)](https://github.com/p1ho)|[![](https://github.com/zrrrzzt.png?size=50)](https://github.com/zrrrzzt)|
 |---|---|
 |[p1ho](https://github.com/p1ho)|[zrrrzzt](https://github.com/zrrrzzt)|
 
 ## Acknowledgement
-This module was inspired by **[w3c-vadlidator-cli](https://www.npmjs.com/package/w3c-validator-cli)**. Unfortunately, it has not been updated for a while, which prompted me to make this one. This module is essentially what that one would be had it been supported till today.
+Inspired by **[w3c-vadlidator-cli](https://www.npmjs.com/package/w3c-validator-cli)** (outdated)
