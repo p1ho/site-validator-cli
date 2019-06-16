@@ -9,6 +9,8 @@ const clearCache = require('./lib/clear-cache')
 const getUrls = require('./lib/get-urls')
 const validatePages = require('./lib/validate-pages')
 const getHelpText = require('./lib/get-help-text')
+const printSummary = require('./lib/print-summary')
+const { cyanOnBlack } = require('./lib/clc')
 const pkg = require('./package.json')
 const exit = require('./lib/exit')
 
@@ -60,7 +62,9 @@ Main Process
 (async () => {
   try {
     let pagesToValidate = await getUrls(options)
-    validatePages(pagesToValidate, options)
+    let results = await validatePages(pagesToValidate, options)
+    printSummary(options.path, results)
+    exit(cyanOnBlack('Finished Checking, have an A-1 Day!'))
   } catch (error) {
     exit(error, true)
   }
