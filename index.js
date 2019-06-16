@@ -5,6 +5,7 @@
 Require statements
  */
 const minimist = require('minimist')
+const sanitize = require('sanitize-filename')
 const clearCache = require('./lib/clear-cache')
 const getUrls = require('./lib/get-urls')
 const validatePages = require('./lib/validate-pages')
@@ -13,12 +14,14 @@ const printSummary = require('./lib/print-summary')
 const { cyanOnBlack } = require('./lib/clc')
 const pkg = require('./package.json')
 const exit = require('./lib/exit')
+const exportOutput = require('./lib/export-output')
 
 /*
 Parsing query parameters
  */
 const query = process.argv[2]
 const argv = minimist(process.argv.slice(2))
+const outputName = `${new Date().toISOString().substring(0, 19).replace(/[:\-_]/gi, '')}`
 
 let options = {
   cacheTime: argv.cacheTime !== undefined ? argv.cacheTime : argv.cache !== undefined ? argv.cache : false,
@@ -27,7 +30,8 @@ let options = {
   quiet: argv.quiet !== undefined,
   debug: argv.debug !== undefined,
   singlePage: argv.page !== undefined,
-  isLocal: argv.isLocal !== undefined || argv.local !== undefined
+  isLocal: argv.isLocal !== undefined || argv.local !== undefined,
+  output: argv.output !== undefined ? argv.output === true ? outputName : sanitize(argv.output) : false
 }
 
 /*
@@ -64,6 +68,9 @@ Main Process
     let pagesToValidate = await getUrls(options)
     let results = await validatePages(pagesToValidate, options)
     printSummary(options.path, results)
+    if (options.output) {
+      exportOutput(results, options)
+    }
     exit(cyanOnBlack('Finished Checking, have an A-1 Day!'))
   } catch (error) {
     exit(error, true)

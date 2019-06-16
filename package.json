@@ -20,6 +20,7 @@
     "minimist": "1.2.0",
     "normalize-url": "4.1.0",
     "p-queue": "4.0.0",
+    "sanitize-filename": "^1.6.1",
     "simplecrawler": "1.1.6"
   },
   "devDependencies": {
