@@ -94,20 +94,20 @@ $ site-validator <url-to-online-file>
 * No redirect is allowed, the path has to be exact on this one.
 
 ## Options
-| Flag &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | Description |
+| Flag | Description |
 | --- | --- |
 | `--page` | This validates the URL passed in without crawling. |
 | `--ff` | (Fail Fast) This flag will stop the checking at the first error.<br>(Note: does not work with `--output`) |
-| `--verbose` | This flag will pretty-print out the errors/warnings. Without it, it'll only tell you whether the page validated without outputting the actual errors. |
+| `--verbose` | This flag will pretty-print out the errors/warnings.<br>Without it, it'll only say whether page validated. |
 | `--quiet` | This flag will ignore warnings or informational messages. |
 | `--local` | This expects the url to be a localhost url<br>(e.g. `localhost:80/index.html`) |
-| `--cache <min>` | Because sitemap generation can take time, a caching mechanism is in place.<br>Simply put in this flag and specify the number of minutes you'd like the cache to persist.<br>The caches will be stored in the cache folder. |
+| `--cache <min>` | Caches generated sitemap since it can take time.<br>Expects a number representing number of minutes you'd like this to persist.<br>The caches will be stored in the cache folder. |
 | `--clear-cache` | `$ site-validator --clear-cache` clears all cached sitemaps.<br>If you want to refetch and recache sitemap for a url:<br>`$ site-validator <url> --cache <minutes> --clear-cache` |
 | `--output <filename>` | Having this flag outputs a json file in the directory where<br>`$ site-validator` is run.<br>Filename is optional, default is current time in [ISO format](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString) |
 
 ### Output Schema
 
-```JavaScript
+```Javascript
 {
   url: "url-entered",
   pages: [
