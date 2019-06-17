@@ -1,13 +1,13 @@
 const test = require('ava')
 const path = require('path')
 const Cache = require('../../lib/Cache')
-const fileExists = require('../../lib/file-exists')
+const { existsSync } = require('fs')
 const cachePath = path.resolve(`${__dirname}/../../cache/test/`)
 
 test('cache file can be created', t => {
   var cache = new Cache('test', cachePath)
   cache.save(true)
-  t.is(true, fileExists('cache/test/test'))
+  t.is(true, existsSync('cache/test/test'))
 })
 
 test("cache's key/value can be set", t => {
@@ -37,5 +37,5 @@ test('cache expiration works', t => {
 test('cache file can be removed', t => {
   var cache = new Cache('test', cachePath)
   cache.remove()
-  t.is(true, !fileExists('cache/test/test'))
+  t.is(true, !existsSync('cache/test/test'))
 })

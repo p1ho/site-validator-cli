@@ -136,9 +136,12 @@ $ site-validator <url-to-online-file>
         url: "crawled-page",
         status: "fail",
         errors: [
-          type: "error-type",
-          message: "error-message",
-          location: "error-location"
+          {
+            type: "error-type",
+            message: "error-message",
+            location: "error-location"  
+          },
+          //...
         ]
       },
       {
