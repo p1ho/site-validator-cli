@@ -54,7 +54,7 @@ if (argv.path) {
 }
 
 if (argv['clear-cache'] || argv['clearCache']) {
-  clearCache()
+  clearCache('sitemap')
   if (options.path === undefined) {
     exit('No path entered, exiting...')
   }
