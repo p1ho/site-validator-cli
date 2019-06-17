@@ -66,7 +66,11 @@ Main Process
 (async () => {
   try {
     let pagesToValidate = await getUrls(options)
+    console.log(`\nEvaluating a total of ${pagesToValidate.length} pages`)
+    console.log('═════════════════════════════════════════════════════════════')
+    if (options.verbose) { console.log('') }
     let results = await validatePages(pagesToValidate, options)
+    console.log('═════════════════════════════════════════════════════════════')
     printSummary(options.path, results)
     if (options.output) {
       exportOutput(results, options)
