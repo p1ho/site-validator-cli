@@ -6,15 +6,16 @@ Require statements
  */
 const minimist = require('minimist')
 const sanitize = require('sanitize-filename')
+const pkg = require('./package.json')
+const getHelpText = require('./lib/get-help-text')
 const clearCache = require('./lib/clear-cache')
+const getOption = require('./lib/get-option')
 const getUrls = require('./lib/get-urls')
 const validatePages = require('./lib/validate-pages')
-const getHelpText = require('./lib/get-help-text')
 const printSummary = require('./lib/print-summary')
-const { cyanOnBlack } = require('./lib/clc')
-const pkg = require('./package.json')
-const exit = require('./lib/exit')
 const exportOutput = require('./lib/export-output')
+const { cyanOnBlack } = require('./lib/clc')
+const exit = require('./lib/exit')
 
 /*
 Parsing query parameters
@@ -24,36 +25,32 @@ const argv = minimist(process.argv.slice(2))
 const outputName = `${new Date().toISOString().substring(0, 19).replace(/[:\-_]/gi, '')}`
 
 let options = {
-  cacheTime: argv.cacheTime !== undefined ? argv.cacheTime : argv.cache !== undefined ? argv.cache : false,
-  failfast: argv.ff !== undefined,
-  verbose: argv.verbose !== undefined,
-  quiet: argv.quiet !== undefined,
-  debug: argv.debug !== undefined,
-  singlePage: argv.page !== undefined,
-  isLocal: argv.isLocal !== undefined || argv.local !== undefined,
-  output: argv.output !== undefined ? argv.output === true ? outputName : sanitize(argv.output) : false
+  cacheTime: getOption(['cache', 'cacheTime'], argv),
+  clearCache: getOption(['clear-cache', 'clearCache'], argv),
+  failfast: getOption(['ff'], argv),
+  verbose: getOption(['verbose'], argv),
+  quiet: getOption(['quiet'], argv),
+  debug: getOption(['debug'], argv),
+  singlePage: getOption(['page'], argv),
+  isLocal: getOption(['local', 'isLocal'], argv),
+  output: argv.output ? argv.output === true ? outputName : sanitize(argv.output) : false,
+  path: argv.path ? getOption(['path', 'url'], argv) : argv._[0]
 }
 
 /*
 Process query parameters
  */
 var helpKW = ['help', '-h', '--help']
-if (!query || helpKW.map(x => { return process.argv.indexOf(x) !== -1 }).indexOf(true) !== -1) {
+if (!query || helpKW.map(kw => { return process.argv.includes(kw) }).includes(true)) {
   exit(getHelpText())
 }
 
 var versionKW = ['version', '-v', '--version']
-if (versionKW.map(x => { return process.argv.indexOf(x) !== -1 }).indexOf(true) !== -1) {
+if (versionKW.map(kw => { return process.argv.includes(kw) }).includes(true)) {
   exit(pkg.version)
 }
 
-if (argv.path) {
-  options.path = argv.path
-} else {
-  options.path = argv._[0]
-}
-
-if (argv['clear-cache'] || argv['clearCache']) {
+if (options.clearCache) {
   clearCache('sitemap')
   if (options.path === undefined) {
     exit('No path entered, exiting...')
