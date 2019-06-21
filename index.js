@@ -7,12 +7,12 @@ Require statements
 const minimist = require('minimist')
 const sanitize = require('sanitize-filename')
 const pkg = require('./package.json')
-const getHelpText = require('./lib/get-help-text')
+const getHelpText = require('./lib/console-texts/get-help-text')
+const getSummaryText = require('./lib/console-texts/get-summary-text')
 const clearCache = require('./lib/clear-cache')
 const getOption = require('./lib/get-option')
 const getUrls = require('./lib/get-urls')
 const validatePages = require('./lib/validate-pages')
-const printSummary = require('./lib/print-summary')
 const exportOutput = require('./lib/export-output')
 const { cyanOnBlack } = require('./lib/clc')
 const exit = require('./lib/exit')
@@ -68,10 +68,8 @@ Main Process
     if (options.verbose) { console.log('') }
     let results = await validatePages(pagesToValidate, options)
     console.log('═════════════════════════════════════════════════════════════')
-    printSummary(options.path, results)
-    if (options.output) {
-      exportOutput(results, options)
-    }
+    console.log(getSummaryText(options.path, results))
+    if (options.output) { exportOutput(results, options) }
     exit(cyanOnBlack('Finished Checking, have an A-1 Day!'))
   } catch (error) {
     exit(error, true)
