@@ -38,18 +38,18 @@ test('check return type is string', t => {
 })
 
 test('check text output (has errors)', t => {
-  var output = `\n\n1 out of 4 pages not found for test-url\n`
+  var output = `\n1 out of 4 pages not found for test-url\n`
   output += `${yellowOnBlack('test-url-1')}\n`
-  output += `\n\n1 out of 4 pages threw error while validating for test-url\n`
+  output += `\n1 out of 4 pages threw error while validating for test-url\n`
   output += `${redOnBlack('test-url-4')}\n`
-  output += `\n\n${redOnBlack('Site Failed Validation')}\n`
+  output += `\n${redOnBlack('Site Failed Validation')}\n`
   output += `1 out of 4 pages failed validation for test-url\n`
   output += `${redOnBlack('test-url-2')}\n`
   t.deepEqual(getSummaryText(input, testResults), output)
 })
 
 test('check text output (no error)', t => {
-  var output = `\n\n${greenOnBlack('Site Validated')} No problems were found for test-url\n`
+  var output = `\n${greenOnBlack('Site Validated')} No problems were found for test-url\n`
   t.deepEqual(getSummaryText(input, []), output)
   t.deepEqual(getSummaryText(input, [
     {
