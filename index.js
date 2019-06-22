@@ -37,6 +37,11 @@ let options = {
   path: argv.path ? getOption(['path', 'url'], argv) : argv._[0]
 }
 
+// set cache time (defaults to 60 minutes if unset)
+if (options.cacheTime === false) {
+  options.cacheTime = 60
+}
+
 /*
 Process query parameters
  */
