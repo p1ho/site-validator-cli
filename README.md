@@ -12,28 +12,47 @@ $ npm i site-validator-cli -g
 ```
 
 ## Usage
-
-### Get Help
 ```
-$ site-validator
-$ site-validator -h
-$ site-validator help
-$ site-validator --help
-```
-
-### Get Version
-```
-$ site-validator -v
-$ site-validator version
-$ site-validator --version
-```
-
-### URL
-```
-$ site-validator <url>
+$ site-validator <url> [options]
 ```
 This takes in the URL and will generate the entire sitemap, then tries to validate each page in the sitemap
 
+```
+$ site-validator <path-to-file> [options]
+```
+This takes in a file accepting one of the following formats: `.json`/`.xml`/`.txt`, then tries to validate each page from the file. supports both local and online files. (**[File Content Guidelines](#file-content-guidelines)**)
+
+```
+$ site-validator [options] --url <url>
+                           --path <path-to-file>
+```
+If it's more convenient, you can also put the url/path at the end.
+
+## Options
+| Flag | Description |
+| --- | --- |
+| `--page` | This validates the URL passed in without crawling. |
+| `--ff` | (Fail Fast) This flag will stop the checking at the first error.<br>(Note: does not work with `--output`) |
+| `--verbose` | This flag will pretty-print out the errors/warnings.<br>Without it, it'll only say whether page validated. |
+| `--quiet` | This flag will ignore warnings or informational messages. |
+| `--local` | This expects the url to be a localhost url<br>(e.g. `localhost:80/index.html`) |
+| `--cache <min>` | By default, the sitemap generated will be cached for 60 minutes. Use this flag to change how long you want to cache the sitemap for. |
+| `--clear-cache` | `$ site-validator --clear-cache` clears all cached sitemaps.<br>If you want to refetch and recache sitemap for a url:<br>`$ site-validator <url> --cache <minutes> --clear-cache` |
+| `--output <filename>` | Outputs a json file in the current directory.<br>Filename optional, defaults to [ISO format](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString) current time<br>**[Output Schema](#output-schema)** |
+
+## Other Commands
+
+### Help
+```
+$ site-validator -h, help, --help
+```
+
+### Version
+```
+$ site-validator -v, version, --version
+```
+
+## File Content Guidelines
 
 ### File - json
 ```
@@ -85,27 +104,7 @@ Expects a xml-file with the following format
 </urlset>
 ```
 
-### Online File
-If you would like to use an online file as a source of URLs (such as a hosted sitemap), you can also do
-```
-$ site-validator <url-to-online-file>
-```
-* Same file type and format restrictions apply.
-* No redirect is allowed, the path has to be exact on this one.
-
-## Options
-| Flag | Description |
-| --- | --- |
-| `--page` | This validates the URL passed in without crawling. |
-| `--ff` | (Fail Fast) This flag will stop the checking at the first error.<br>(Note: does not work with `--output`) |
-| `--verbose` | This flag will pretty-print out the errors/warnings.<br>Without it, it'll only say whether page validated. |
-| `--quiet` | This flag will ignore warnings or informational messages. |
-| `--local` | This expects the url to be a localhost url<br>(e.g. `localhost:80/index.html`) |
-| `--cache <min>` | Caches generated sitemap since it can take time.<br>Expects a number representing number of minutes you'd like this to persist.<br>The caches will be stored in the cache folder. |
-| `--clear-cache` | `$ site-validator --clear-cache` clears all cached sitemaps.<br>If you want to refetch and recache sitemap for a url:<br>`$ site-validator <url> --cache <minutes> --clear-cache` |
-| `--output <filename>` | Having this flag outputs a json file in the directory where<br>`$ site-validator` is run.<br>Filename is optional, default is current time in [ISO format](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString) |
-
-### Output Schema
+## Output Schema
 
 ```Javascript
 {
@@ -116,24 +115,22 @@ $ site-validator <url-to-online-file>
     "crawled-page-3",
     //...
   ],
-  params: {
-    verbose: "boolean",
-    quiet: "boolean",
-    singlePage: "boolean"
-  },
+  quiet: "boolean",
+  singlePage: "boolean",
   passed: "boolean",
   results: {
     passed: [
       {
-        url: "crawled-page",
+        url: "crawled-page-pass",
         status: "pass",
         errors: []
       },
       //...
     ],
     failed: [
+      // may contain the following types
       {
-        url: "crawled-page",
+        url: "crawled-page-fail",
         status: "fail",
         errors: [
           {
@@ -160,17 +157,6 @@ $ site-validator <url-to-online-file>
     ]
   }
 }
-```
-
-### Chaining Options
-```
-$ site-validator <url> --verbose --quiet --cache <minutes>
-```
-The option flags can be chained in any order, as long as they are behind the url that is being evaluated.
-
-If it's more convenient, you can also put the url at the end.
-```
-$ site-validator --verbose --quiet --path <url>
 ```
 
 ## Contributors
