@@ -34,7 +34,7 @@ let options = {
   singlePage: getOption(['page'], argv),
   isLocal: getOption(['local', 'isLocal'], argv),
   output: argv.output ? argv.output === true ? outputName : sanitize(argv.output) : false,
-  path: argv.path ? getOption(['path', 'url'], argv) : argv._[0]
+  path: argv.path || argv.url ? getOption(['path', 'url'], argv) : argv._[0]
 }
 
 // set cache time (defaults to 60 minutes if unset)
@@ -55,11 +55,9 @@ if (versionKW.map(kw => { return process.argv.includes(kw) }).includes(true)) {
   exit(pkg.version)
 }
 
-if (options.clearCache) {
+if (options.path === undefined && options.clearCache) {
   clearCache('sitemap')
-  if (options.path === undefined) {
-    exit('No path entered, exiting...')
-  }
+  exit('No path entered, exiting...')
 }
 
 /*
