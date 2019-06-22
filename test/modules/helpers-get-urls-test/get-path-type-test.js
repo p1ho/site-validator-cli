@@ -1,0 +1,16 @@
+const test = require('ava')
+const getPathType = require('../../../lib/helpers-get-urls/get-path-type.js')
+
+test('paths are correctly distinguished', async (t) => {
+  t.true(getPathType('test/data/urls.json') === 'file')
+  t.true(getPathType('test/data/urls.txt') === 'file')
+  t.true(getPathType('test/data/sitemap.xml') === 'file')
+  t.true(getPathType('test/data/doesNotExist.json') === 'online-file')
+  t.true(getPathType('https://raw.githubusercontent.com/p1ho/site-validator-cli/master/test/data/urls.json') === 'online-file')
+  t.true(getPathType('https://raw.githubusercontent.com/p1ho/site-validator-cli/master/test/data/urls.txt') === 'online-file')
+  t.true(getPathType('https://raw.githubusercontent.com/p1ho/site-validator-cli/master/test/data/sitemap.xml') === 'online-file')
+  t.true(getPathType('https://raw.githubusercontent.com/p1ho/site-validator-cli/master/test/data/doesNotExist.json') === 'online-file')
+  t.true(getPathType('https://raw.githubusercontent.com/p1ho/site-validator-cli/master/test/data/urls.pdf') === 'url')
+  t.true(getPathType('https://p1ho.github.io/site-validator-cli/test/data/site/index.html') === 'url')
+  t.true(getPathType('localhost:8080/index.html') === 'url')
+})
