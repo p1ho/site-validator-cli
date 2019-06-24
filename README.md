@@ -39,6 +39,7 @@ If it's more convenient, you can also put the url/path at the end.
 | `--cache <min>` | By default, the sitemap generated will be cached for 60 minutes. Use this flag to change how long you want to cache the sitemap for. |
 | `--clear-cache` | `$ site-validator --clear-cache` clears all cached sitemaps.<br>If you want to refetch and recache sitemap for a url:<br>`$ site-validator <url> --cache <minutes> --clear-cache` |
 | `--output <filename>` | Outputs a json file in the current directory.<br>Filename optional, defaults to [ISO format](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString) current time<br>**[Output Schema](#output-schema)** |
+| `--view <filename>` | Prints report from output json file (without `.json`) to console.<br>`$ site-validator <filename> --view`<br>`$ site-validator --view <filename>`<br>both works.
 
 ## Other Commands
 
