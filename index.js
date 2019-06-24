@@ -31,7 +31,6 @@ let options = {
   failfast: getOption(['ff'], argv),
   verbose: getOption(['verbose'], argv),
   quiet: getOption(['quiet'], argv),
-  debug: getOption(['debug'], argv),
   singlePage: getOption(['page'], argv),
   isLocal: getOption(['local', 'isLocal'], argv),
   output: argv.output ? argv.output === true ? outputName : sanitize(argv.output) : false,
