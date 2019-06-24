@@ -9,8 +9,8 @@ const expectedOutput = [
 ]
 const unreferenced = 'https://p1ho.github.io/site-validator-cli/test/data/site/unreferenced.html'
 
-test('urls are found (cache/debug set to false)', async (t) => {
-  var urls = await getUrlsFromCrawler('https://p1ho.github.io/site-validator-cli/test/data/site/index.html', false, false, false)
+test('urls are found (cache set to false)', async (t) => {
+  var urls = await getUrlsFromCrawler('https://p1ho.github.io/site-validator-cli/test/data/site/index.html', false, false)
   urls.forEach(url => {
     t.true(expectedOutput.includes(url))
   })

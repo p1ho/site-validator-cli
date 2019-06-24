@@ -13,7 +13,8 @@ const clearCache = require('./lib/clear-cache')
 const getOption = require('./lib/get-option')
 const getUrls = require('./lib/get-urls')
 const validatePages = require('./lib/validate-pages')
-const exportOutput = require('./lib/export-output')
+const exportOutput = require('./lib/output/export-output')
+const viewOutput = require('./lib/output/view-output')
 const { cyanOnBlack } = require('./lib/clc')
 const exit = require('./lib/exit')
 
@@ -30,10 +31,10 @@ let options = {
   failfast: getOption(['ff'], argv),
   verbose: getOption(['verbose'], argv),
   quiet: getOption(['quiet'], argv),
-  debug: getOption(['debug'], argv),
   singlePage: getOption(['page'], argv),
   isLocal: getOption(['local', 'isLocal'], argv),
   output: argv.output ? argv.output === true ? outputName : sanitize(argv.output) : false,
+  view: getOption(['view'], argv),
   path: argv.path || argv.url ? getOption(['path', 'url'], argv) : argv._[0]
 }
 
@@ -53,6 +54,14 @@ if (!query || helpKW.map(kw => { return process.argv.includes(kw) }).includes(tr
 var versionKW = ['version', '-v', '--version']
 if (versionKW.map(kw => { return process.argv.includes(kw) }).includes(true)) {
   exit(pkg.version)
+}
+
+if (options.view !== false) {
+  if (options.view !== true) {
+    viewOutput(options.view)
+  } else {
+    viewOutput(options.path)
+  }
 }
 
 if (options.path === undefined && options.clearCache) {
