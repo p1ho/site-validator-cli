@@ -1,6 +1,6 @@
 const test = require('ava')
 const fs = require('fs')
-const exportOutput = require('../../lib/export-output')
+const exportOutput = require('../../../lib/output/export-output')
 
 test('test output can be created and saved', t => {
   var results = []
