@@ -32,7 +32,8 @@ const testResults = {
     status: 'error',
     url: 'test-url',
     errors: [
-      'some error message'
+      'some error message',
+      new Error('error message in an Error object')
     ]
   }
 }
@@ -81,7 +82,9 @@ test('check text output (verbose on)', t => {
   t.deepEqual(getResultText(testResults['pass'], true), output)
 
   output = `${redOnBlack('ERROR')}──  ${redOnBlack('test-url')}\n`
-  output += `some error message\n`
+  output += `${whiteOnRed('some error message')}\n`
+  output += `${red('───────────────────────────────────────────────────────────')}\n`
+  output += `${whiteOnRed(new Error('error message in an Error object'))}\n`
   output += `${red('───────────────────────────────────────────────────────────')}\n`
   t.deepEqual(getResultText(testResults['error'], true), output)
 })
