@@ -26,20 +26,20 @@ This takes in a file accepting one of the following formats: `.json`/`.xml`/`.tx
 $ site-validator [options] --url <url>
                            --path <path-to-file>
 ```
-If it's more convenient, you can also put the url/path at the end.
+If it's more convenient, you can also put the url/path at the end, but you have to prepend with `--url` or `--path`.
 
 ## Options
 | Flag | Description |
 | --- | --- |
-| `--page` | This validates the URL passed in without crawling. |
-| `--ff` | (Fail Fast) This flag will stop the checking at the first error.<br>(Note: does not work with `--output`) |
 | `--verbose` | This flag will pretty-print out the errors/warnings.<br>Without it, it'll only say whether page validated. |
 | `--quiet` | This flag will ignore warnings or informational messages. |
-| `--local` | This expects the url to be a localhost url<br>(e.g. `localhost:80/index.html`) |
+| `--local` | This expects the url to be a localhost url<br>(e.g. `http://localhost`), if the site is not served on port 80, you have to specify the port number (e.g. `http://localhost:3000`). localhost sites served over HTTPS is not currently supported. |
 | `--cache <min>` | By default, the sitemap generated will be cached for 60 minutes. Use this flag to change how long you want to cache the sitemap for. |
-| `--clear-cache` | `$ site-validator --clear-cache` clears all cached sitemaps.<br>If you want to refetch and recache sitemap for a url:<br>`$ site-validator <url> --cache <minutes> --clear-cache` |
+| `--clear-cache` | `$ site-validator --clear-cache` clears all cached sitemaps.<br>If you want to refetch and recache sitemap for a url:<br>`$ site-validator <url> --clear-cache` |
 | `--output <filename>` | Outputs a json file in the current directory.<br>Filename optional, defaults to [ISO format](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString) current time<br>**[Output Schema](#output-schema)** |
-| `--view <filename>` | Prints report from output json file (without `.json`) to console.<br>`$ site-validator <filename> --view`<br>`$ site-validator --view <filename>`<br>both works.
+| `--view <filename>` | Prints report from output json file (without `.json`) to console.<br>`$ site-validator <filename> --view`<br>`$ site-validator --view <filename>`<br>both works. |
+| `--page` | This validates the URL passed in without crawling. |
+| `--ff` | (Fail Fast) This flag will stop the checking at the first error.<br>(Note: does not work with `--output`) |
 
 ## Other Commands
 
