@@ -66,7 +66,7 @@ if (options.view !== false) {
 
 if (options.path === undefined) {
   if (options.clearCache) {
-    clearCache('sitemap')    
+    clearCache('sitemap')
   }
   exit('No path entered. \nIf path is not the 1st argument, you must prepend it with --url or --path.')
 }
