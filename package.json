@@ -1,6 +1,6 @@
 {
   "name": "site-validator-cli",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "description": "A command line tool that takes a URL or a file, then uses html-validator (a wrapper for https://validator.w3.org/nu/) to validate each page.",
   "main": "index.js",
   "directories": {
