@@ -21,7 +21,7 @@
     "normalize-url": "4.1.0",
     "p-queue": "4.0.0",
     "sanitize-filename": "^1.6.3",
-    "simplecrawler": "1.1.6"
+    "simplecrawler": "1.1.8"
   },
   "devDependencies": {
     "ava": "1.4.1",
