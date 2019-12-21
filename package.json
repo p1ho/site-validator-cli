@@ -13,7 +13,7 @@
     "node": ">=8.15.0"
   },
   "dependencies": {
-    "cli-color": "1.4.0",
+    "cli-color": "2.0.0",
     "fast-xml-parser": "3.12.13",
     "flat-cache": "2.0.1",
     "html-validator": "^4.1.1",
