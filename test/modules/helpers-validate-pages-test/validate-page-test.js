@@ -9,9 +9,9 @@ const urls = {
 }
 
 const retryValidatePage = async (page, quiet, isLocal) => {
-  let result = await validatePage(page, quiet, isLocal)
+  const result = await validatePage(page, quiet, isLocal)
   if (result.status === 'error') {
-    let msg = `${result.url} was not fetched successfully, retrying...`
+    const msg = `${result.url} was not fetched successfully, retrying...`
     console.error(msg)
     throw new Error(msg)
   }
@@ -62,7 +62,7 @@ test('pages that should fail', async (t) => {
 })
 
 test('pages not found', async (t) => {
-  let result = await retry(() => {
+  const result = await retry(() => {
     return retryValidatePage(urls.notFound, false, false)
   })
   t.deepEqual(result, {

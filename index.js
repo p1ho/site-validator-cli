@@ -25,7 +25,7 @@ const query = process.argv[2]
 const argv = minimist(process.argv.slice(2))
 const outputName = `${new Date().toISOString().substring(0, 19).replace(/[:\-_]/gi, '')}`
 
-let options = {
+const options = {
   cacheTime: getOption(['cache', 'cacheTime'], argv),
   clearCache: getOption(['clear-cache', 'clearCache'], argv),
   failfast: getOption(['ff'], argv),
@@ -76,11 +76,11 @@ Main Process
  */
 (async () => {
   try {
-    let pagesToValidate = await getUrls(options)
+    const pagesToValidate = await getUrls(options)
     console.log(`\nEvaluating a total of ${pagesToValidate.length} pages`)
     console.log('═════════════════════════════════════════════════════════════')
     if (options.verbose) { console.log('') }
-    let results = await validatePages(pagesToValidate, options)
+    const results = await validatePages(pagesToValidate, options)
     console.log('═════════════════════════════════════════════════════════════')
     console.log(getSummaryText(options.path, results))
     if (options.output) { exportOutput(results, options) }

@@ -15,10 +15,10 @@ const options = {
 }
 
 const retryValidatePages = async (urls, options) => {
-  let results = await validatePages(urls, options)
+  const results = await validatePages(urls, options)
   results.forEach(res => {
     if (res.status === 'error') {
-      let msg = `${res.url} was not fetched successfully, retrying...`
+      const msg = `${res.url} was not fetched successfully, retrying...`
       console.error(msg)
       throw new Error(msg)
     }
@@ -59,7 +59,7 @@ test('get single result', async (t) => {
 })
 
 test('get multiple results (cannot test order)', async (t) => {
-  let urlList = [
+  const urlList = [
     'https://p1ho.github.io/site-validator-cli/test/data/site/index.html',
     'https://p1ho.github.io/site-validator-cli/test/data/site/page.html',
     'https://p1ho.github.io/site-validator-cli/test/data/site/from_page.html'
