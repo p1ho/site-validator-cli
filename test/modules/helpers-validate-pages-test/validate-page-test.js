@@ -9,30 +9,31 @@ const urls = {
 }
 
 const retryValidatePage = async (page, quiet, isLocal) => {
-  let result = await validatePage(page, quiet, isLocal)
-  if (result.status === 'error') {
-    let msg = `${result.url} was not fetched successfully, retrying...`
-    console.error(msg)
-    throw new Error(msg)
-  }
-  return result
+  return retry(async () => {
+    const result = await validatePage(page, quiet, isLocal)
+    if (result.status === 'error') {
+      const msg = `${result.url} was not fetched successfully, retrying...`
+      console.error(msg)
+      throw new Error(msg)
+    }
+    return result
+  }, {
+    retries: 3,
+    factor: 1
+  })
 }
 
 test('pages that should pass', async (t) => {
   let result
 
-  result = await retry(() => {
-    return retryValidatePage(urls.pass, false, false)
-  })
+  result = await retryValidatePage(urls.pass, false, false)
   t.deepEqual(result, {
     url: urls.pass,
     status: 'pass',
     errors: []
   })
 
-  result = await retry(() => {
-    return retryValidatePage(urls.warning, true, false)
-  })
+  result = await retryValidatePage(urls.warning, true, false)
   t.deepEqual(result, {
     url: urls.warning,
     status: 'pass',
@@ -43,18 +44,14 @@ test('pages that should pass', async (t) => {
 test('pages that should fail', async (t) => {
   let result
 
-  result = await retry(() => {
-    return retryValidatePage(urls.fail, false, false)
-  })
+  result = await retryValidatePage(urls.fail, false, false)
   t.true(result.url === urls.fail)
   t.true(result.status === 'fail')
   t.true(result.errors.length === 2)
   t.true(result.errors[0].type === 'error')
   t.true(result.errors[1].type === 'error')
 
-  result = await retry(() => {
-    return retryValidatePage(urls.warning, false, false)
-  })
+  result = await retryValidatePage(urls.warning, false, false)
   t.true(result.url === urls.warning)
   t.true(result.status === 'fail')
   t.true(result.errors.length === 1)
@@ -62,9 +59,7 @@ test('pages that should fail', async (t) => {
 })
 
 test('pages not found', async (t) => {
-  let result = await retry(() => {
-    return retryValidatePage(urls.notFound, false, false)
-  })
+  const result = await retryValidatePage(urls.notFound, false, false)
   t.deepEqual(result, {
     url: urls.notFound,
     status: 'not found',
