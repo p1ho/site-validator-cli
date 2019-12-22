@@ -1,4 +1,5 @@
 const test = require('ava')
+const retry = require('async-retry')
 const validatePage = require('../../../lib/helpers-validate-pages/validate-page')
 const urls = {
   pass: 'https://p1ho.github.io/site-validator-cli/test/data/site/index.html',
@@ -7,15 +8,31 @@ const urls = {
   notFound: 'http://please-do-not-register-this-domain.com/'
 }
 
+const retryValidatePage = async (page, quiet, isLocal) => {
+  let result = await validatePage(page, quiet, isLocal)
+  if (result.status === 'error') {
+    let msg = `${result.url} was not fetched successfully, retrying...`
+    console.error(msg)
+    throw new Error(msg)
+  }
+  return result
+}
+
 test('pages that should pass', async (t) => {
-  let result = await validatePage(urls.pass, false, false)
+  let result
+
+  result = await retry(() => {
+    return retryValidatePage(urls.pass, false, false)
+  })
   t.deepEqual(result, {
     url: urls.pass,
     status: 'pass',
     errors: []
   })
 
-  result = await validatePage(urls.warning, true, false)
+  result = await retry(() => {
+    return retryValidatePage(urls.warning, true, false)
+  })
   t.deepEqual(result, {
     url: urls.warning,
     status: 'pass',
@@ -24,14 +41,20 @@ test('pages that should pass', async (t) => {
 })
 
 test('pages that should fail', async (t) => {
-  let result = await validatePage(urls.fail, false, false)
+  let result
+
+  result = await retry(() => {
+    return retryValidatePage(urls.fail, false, false)
+  })
   t.true(result.url === urls.fail)
   t.true(result.status === 'fail')
   t.true(result.errors.length === 2)
   t.true(result.errors[0].type === 'error')
   t.true(result.errors[1].type === 'error')
 
-  result = await validatePage(urls.warning, false, false)
+  result = await retry(() => {
+    return retryValidatePage(urls.warning, false, false)
+  })
   t.true(result.url === urls.warning)
   t.true(result.status === 'fail')
   t.true(result.errors.length === 1)
@@ -39,7 +62,9 @@ test('pages that should fail', async (t) => {
 })
 
 test('pages not found', async (t) => {
-  let result = await validatePage(urls.notFound, false, false)
+  let result = await retry(() => {
+    return retryValidatePage(urls.notFound, false, false)
+  })
   t.deepEqual(result, {
     url: urls.notFound,
     status: 'not found',
