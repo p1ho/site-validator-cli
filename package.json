@@ -27,7 +27,7 @@
     "async-retry": "1.2.3",
     "ava": "2.4.0",
     "coveralls": "3.0.9",
-    "nyc": "14.1.1",
+    "nyc": "15.0.0",
     "package-preview": "3.0.0",
     "standard": "14.3.1"
   },
