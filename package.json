@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "cli-color": "2.0.0",
-    "fast-xml-parser": "3.15.1",
+    "fast-xml-parser": "3.16.0",
     "flat-cache": "2.0.1",
     "html-validator": "^5.0.0",
     "minimist": "1.2.0",
