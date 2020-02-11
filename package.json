@@ -18,7 +18,7 @@
     "flat-cache": "2.0.1",
     "html-validator": "^5.0.0",
     "minimist": "1.2.0",
-    "normalize-url": "4.5.0",
+    "normalize-url": "5.0.0",
     "p-queue": "6.2.1",
     "sanitize-filename": "^1.6.3",
     "simplecrawler": "1.1.8"
