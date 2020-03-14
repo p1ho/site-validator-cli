@@ -17,7 +17,7 @@
     "fast-xml-parser": "3.16.0",
     "flat-cache": "2.0.1",
     "html-validator": "^5.0.0",
-    "minimist": "1.2.0",
+    "minimist": "1.2.2",
     "normalize-url": "5.0.0",
     "p-queue": "6.3.0",
     "sanitize-filename": "^1.6.3",
