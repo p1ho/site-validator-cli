@@ -29,7 +29,7 @@
     "coveralls": "3.0.9",
     "nyc": "15.0.0",
     "package-preview": "3.0.0",
-    "standard": "14.3.2"
+    "standard": "14.3.3"
   },
   "scripts": {
     "test": "standard && npm audit && ava",
