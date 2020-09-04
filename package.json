@@ -28,7 +28,6 @@
     "ava": "3.12.1",
     "coveralls": "3.1.0",
     "nyc": "15.1.0",
-    "package-preview": "3.0.0",
     "standard": "14.3.4"
   },
   "scripts": {
@@ -36,8 +35,7 @@
     "test-offline": "standard && ava",
     "standard-fix": "standard --fix",
     "coverage": "nyc ava",
-    "coveralls": "nyc ava && nyc report --reporter=lcov && cat coverage/lcov.info | coveralls",
-    "package-preview": "preview"
+    "coveralls": "nyc ava && nyc report --reporter=lcov && cat coverage/lcov.info | coveralls"
   },
   "keywords": [
     "site-validator",
