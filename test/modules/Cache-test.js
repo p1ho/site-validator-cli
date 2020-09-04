@@ -27,6 +27,8 @@ test('cache key can be removed', t => {
 
 test('cache expiration works, expired item should be deleted', t => {
   var cache = new Cache('test', cachePath, 1 / 60)
+  t.is(cache.getKey('key'), undefined)
+  t.is(cache.cache.getKey('key'), undefined)
   cache.setKey('key', 'value expires in 1 second')
   t.is(cache.getKey('key'), 'value expires in 1 second')
   setTimeout(() => {
