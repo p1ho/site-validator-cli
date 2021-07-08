@@ -19,7 +19,7 @@
     "html-validator": "^5.0.0",
     "minimist": "1.2.5",
     "normalize-url": "6.1.0",
-    "p-queue": "6.6.1",
+    "p-queue": "6.6.2",
     "sanitize-filename": "^1.6.3",
     "simplecrawler": "1.1.9"
   },
