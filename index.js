@@ -84,6 +84,12 @@ Main Process
     console.log('═════════════════════════════════════════════════════════════')
     console.log(getSummaryText(options.path, results))
     if (options.output) { exportOutput(results, options) }
+    const hasErrors = results.some((result) => {
+      return result.status === 'fail'
+    })
+    if (hasErrors) {
+      throw new Error('One or more pages failed validation')
+    }
     exit(cyanOnBlack('Finished Checking, have an A-1 Day!'))
   } catch (error) {
     exit(error, true)
