@@ -19,7 +19,7 @@
     "html-validator": "^5.0.0",
     "minimist": "1.2.5",
     "normalize-url": "7.0.3",
-    "p-queue": "6.6.2",
+    "p-queue": "7.1.0",
     "sanitize-filename": "^1.6.3",
     "simplecrawler": "1.1.9"
   },
@@ -28,7 +28,7 @@
     "ava": "3.15.0",
     "coveralls": "3.1.1",
     "nyc": "15.1.0",
-    "standard": "14.3.4"
+    "standard": "16.0.4"
   },
   "scripts": {
     "test": "standard && npm audit && ava",
